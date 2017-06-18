@@ -4,34 +4,43 @@ using UnityEngine;
 
 public class BeatIndicatorSpawner : MonoBehaviour {
 
-	Vector3 spawnPosition = new Vector2(0, 0);
-	List<BeatIndicator> pool;
-	// Use this for initialization
+	// Dealt with in inspector.
+	[SerializeField] GameObject indicatorPrefab;
+	[SerializeField] float indicatorSpeed;
+
+	Vector3 spawnPosition;
+	List<GameObject> pool;
+
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		pool = new List<GameObject> ();
+		spawnPosition = gameObject.transform.position;
 	}
 
-	void getIndicator() {
-		foreach (BeatIndicator indicator in pool) {
-			if (indicator.gameObject.activeInHierarchy) {
-				indicator.gameObject.transform.position = spawnPosition;
-				indicator.gameObject.SetActive (true);
-				return indicator;
+	void Update () {
+		if (Input.GetKeyDown (KeyCode.A)) {
+			SpawnIndicator ();
+		}
+	}
+
+	GameObject GetIndicator() {
+		GameObject newIndicatorObj;
+		// Check if there is an existing, idle GameObject in the pool.
+		foreach (GameObject obj in pool) {
+			if (!obj.activeInHierarchy) {
+				obj.transform.position = spawnPosition;
+				obj.SetActive (true);
+				obj.transform.position = spawnPosition;
+				return obj;
 			}
 		}
-		GameObject newIndicator = new GameObject ();
-		newIndicator.AddComponent (new BeatIndicator ());
-		pool.Add (newIndicator);
-		return newIndicator;
+		// If no existing GameObject is free, create a new one.
+		newIndicatorObj = Instantiate (indicatorPrefab, gameObject.transform);
+		pool.Add (newIndicatorObj);
+		return newIndicatorObj;
 	}
 
-	void spawnIndicator() {
-		BeatIndicator indicator = getIndicator ();
-		indicator.move (new Vector2 (-1, 0), 1);
+	public void SpawnIndicator() {
+		GameObject indicatorObj = GetIndicator ();
+		indicatorObj.GetComponent<BeatIndicator>().setTrajectory (Vector3.left, indicatorSpeed);
 	}
 }
