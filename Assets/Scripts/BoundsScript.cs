@@ -6,5 +6,6 @@ public class BoundsScript : MonoBehaviour {
 
 	void OnTriggerExit2D (Collider2D other) {
 		Debug.Log ("Hey");
+		other.gameObject.SetActive (false);
 	}
 }

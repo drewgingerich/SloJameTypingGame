@@ -7,12 +7,12 @@ public class BeatIndicator : MonoBehaviour {
 	Vector3 direction;
 	float speed;
 
-	void Update () {
+	void FixedUpdate () {
 		gameObject.transform.Translate (direction * speed * Time.deltaTime);
 	}
 
 	void OnTriggerExit2D (Collider2D other) {
-		gameObject.SetActive (false);
+		//nuthin'
 	}
 
 	public void setTrajectory(Vector3 direction, float speed) {

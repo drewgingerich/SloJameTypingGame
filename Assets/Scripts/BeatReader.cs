@@ -17,7 +17,7 @@ public class BeatReader : MonoBehaviour {
 		spawner = spawnerObj.GetComponent<BeatIndicatorSpawner> ();
 	}
 
-	void Update () {
+	void FixedUpdate () {
 		timeSinceLastBeat += Time.deltaTime;
 		if (timeSinceLastBeat >= songBeats.beatOffsets [beatIndex]) {
 			spawner.SpawnIndicator ();

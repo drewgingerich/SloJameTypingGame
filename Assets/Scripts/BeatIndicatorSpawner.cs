@@ -16,8 +16,8 @@ public class BeatIndicatorSpawner : MonoBehaviour {
 		spawnPosition = gameObject.transform.position;
 	}
 
-	void Update () {
-		if (Input.GetKeyDown (KeyCode.A)) {
+	void FixedUpdate () {
+		if (Input.GetKey (KeyCode.A)) {
 			SpawnIndicator ();
 		}
 	}
