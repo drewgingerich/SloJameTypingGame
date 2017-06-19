@@ -17,7 +17,7 @@ public class BeatIndicatorSpawner : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		if (Input.GetKey (KeyCode.A)) {
+		if (Input.GetKeyDown (KeyCode.A)) {
 			SpawnIndicator ();
 		}
 	}

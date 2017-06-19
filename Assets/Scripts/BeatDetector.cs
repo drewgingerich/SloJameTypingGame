@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class BeatDetector : MonoBehaviour {
 
-	// Use this for initialization
+	List <GameObject> currentCollisions = new List <GameObject> ();
+
 	void Start () {
 
 	}
-		
-	void OnTriggerEnter2D (Collider2D other) {
-		if (Input.GetKey (KeyCode.S)) {
-			other.gameObject.SetActive (false);
-			Debug.Log ("TEST");
+
+	void Update () {
+		if (Input.GetKeyDown (KeyCode.S)) {
+			for (int iii = 0; iii < currentCollisions.Count; ++iii) {
+				currentCollisions[0].SetActive(false);
+			}
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	void OnTriggerEnter2D (Collider2D col) {
+		currentCollisions.Add(col.gameObject);
+	}
+
+	void OnTriggerExit2D (Collider2D col) {
+		currentCollisions.Remove(col.gameObject);
 	}
 }
