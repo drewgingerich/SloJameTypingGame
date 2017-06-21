@@ -5,6 +5,7 @@ using UnityEngine;
 public class BeatDetector : MonoBehaviour {
 
 	List <GameObject> currentCollisions = new List <GameObject> ();
+	[SerializeField] FlareSpawner listener;
 
 	void Start () {
 
@@ -12,8 +13,12 @@ public class BeatDetector : MonoBehaviour {
 
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.S)) {
+			//assume that Drew's Text thing has a getCurrentLetter() function;
+
+
 			for (int iii = 0; iii < currentCollisions.Count; ++iii) {
 				currentCollisions[0].SetActive(false);
+				listener.SpawnFlare ();
 			}
 		}
 	}
