@@ -33,6 +33,7 @@ public class FlareSpawner: MonoBehaviour {
 
 	public void SpawnFlare(/*bool GoodOrBad*/) {
 		GameObject flare = GetFlare ();
-		flare.GetComponent<Flare>().setTrajectory (Vector3.up, 2);
+		Vector3 trajectory = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(0.0f, 1.0f), 0);
+		flare.GetComponent<Flare>().setTrajectory (trajectory, 2);
 	}
 }
