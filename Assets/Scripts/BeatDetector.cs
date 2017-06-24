@@ -14,11 +14,15 @@ public class BeatDetector : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.S)) {
 			//assume that Drew's Text thing has a getCurrentLetter() function;
-
+			bool triggered = false;
 
 			for (int iii = 0; iii < currentCollisions.Count; ++iii) {
-				currentCollisions[0].SetActive(false);
-				listener.SpawnFlare ();
+				currentCollisions [0].SetActive (false);
+				listener.SpawnFlare (true);
+				triggered = true;
+			}
+			if (!triggered) {
+				listener.SpawnFlare (false);
 			}
 		}
 	}
