@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoundsScript : MonoBehaviour {
-
+public class Passage : ScriptableObject {
+	[Multiline] public string passageText;
 }
