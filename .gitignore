@@ -1,3 +1,6 @@
+*.mp3
+*.mp3.meta
+
 5 lines (29 sloc)  422 Bytes
 /[Ll]ibrary/
 /[Tt]emp/

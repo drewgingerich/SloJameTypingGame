@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoundsScript : MonoBehaviour {
+public class Song : MonoBehaviour {
 
+	AudioClip song;
+	List<SongBeats> songBeats;
 }
