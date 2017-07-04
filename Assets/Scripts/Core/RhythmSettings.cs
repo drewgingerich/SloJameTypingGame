@@ -5,6 +5,7 @@ using UnityEngine;
 public class RhythmSettings : ScriptableObject {
 
 	public float indicatorTravelTime;
+	public float visualOffset;
 	public float timingWindowHalfWidth;
 	public float songBPM;
 	public float beatDuration;

@@ -36,7 +36,7 @@ public class FutureBeatReader : MonoBehaviour {
 
 	void IncrementBeatIndex () {
 		// For now, loop through beat map for testing purposes.
-		beatIndex = (beatIndex + 1) % songBeats.beatOffsets.Count;
 		timeSinceLastBeat -= songBeats.beatOffsets [beatIndex] * rhythmSettings.beatDuration;
+		beatIndex = (beatIndex + 1) % songBeats.beatOffsets.Count;
 	}
 }

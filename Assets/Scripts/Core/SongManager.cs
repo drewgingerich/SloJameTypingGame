@@ -15,7 +15,7 @@ public class SongManager : MonoBehaviour {
 
 	void Start () {
 		lastReportedPlayheadPosition = audioSource.time;
-		interpolatedPlayheadPosition = rhythmSettings.indicatorTravelTime * -1;
+		interpolatedPlayheadPosition = rhythmSettings.indicatorTravelTime * -1 + rhythmSettings.visualOffset;
 		audioSource.PlayDelayed (rhythmSettings.indicatorTravelTime);
 	}
 

@@ -55,7 +55,7 @@ public class TextUI : MonoBehaviour {
 			) / 4f;
 			RectTransform rectTrans = gameObject.GetComponent<RectTransform> ();
 			rectTrans.localPosition = new Vector3 (
-				avgPos.x * -1, rectTrans.localPosition.y , rectTrans.localPosition.z
+				avgPos.x * -1 - 7, rectTrans.localPosition.y , rectTrans.localPosition.z
 			);
 		}
 		else {
