@@ -10,7 +10,7 @@ public class TextUI : MonoBehaviour {
 	[SerializeField] TextManager textManager;
 
 	void Awake() {
-		textManager.OnTextChange += DisplayText;
+		textManager.OnChangeText += DisplayText;
 	}
 
 	public void DisplayText (int charIndex, string currentLine, string nextLine) {

@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class TextManager : MonoBehaviour {
 
-	[SerializeField] BeatReader beatReader;
+	[SerializeField] InteractiveBeatSpawner interactiveBeatSpawner;
 	[SerializeField] Passage passage;
 
 	List<string> textLines;
 	int textIndex;
 	int charIndex;
 
-	public event System.Action<int, string, string> OnTextChange;
+	public event System.Action<int, string, string> OnChangeText;
+
+	public char GetCurrentCharAtIndex(int relativeIndex) {
+		return textLines [textIndex] [charIndex + relativeIndex];
+	}
 
 	void Awake () {
 		textLines = new List<string> (passage.passageText.Split ('\n'));
@@ -20,8 +24,8 @@ public class TextManager : MonoBehaviour {
 	}
 
 	void Start () {
-		beatReader.OnBeatEnd += IncrementText;
-		OnTextChange (charIndex, textLines [textIndex], textLines [textIndex + 1]);
+		interactiveBeatSpawner.OnCreateInteractiveBeat += RegisterUpcomingBeat;
+		OnChangeText (charIndex, textLines [textIndex], textLines [textIndex + 1]);
 	}
 		
 	void IncrementText() {
@@ -34,10 +38,10 @@ public class TextManager : MonoBehaviour {
 		if (textIndex < textLines.Count - 1) {
 			nextLine = textLines [textIndex + 1];
 		}
-		OnTextChange (charIndex, textLines [textIndex], textLines [textIndex + 1]);
+		OnChangeText (charIndex, textLines [textIndex], textLines [textIndex + 1]);
 	}
 
-	public char GetCurrentChar() {
-		return textLines [textIndex] [charIndex];
+	void RegisterUpcomingBeat (InteractiveBeat beat) {
+		beat.OnLifetimeEnd += IncrementText;
 	}
 }

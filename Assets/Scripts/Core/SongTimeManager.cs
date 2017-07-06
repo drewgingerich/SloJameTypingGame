@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SongManager : MonoBehaviour {
+public class SongTimeManager : MonoBehaviour {
 
 	[SerializeField] AudioSource audioSource;
-	[SerializeField] SongBeats songBeats;
 	[SerializeField] RhythmSettings rhythmSettings;
 
 	public event System.Action<float> OnReadPlayheadPosition;
 
+	float totalPlayTime;
 	float lastReportedPlayheadPosition;
 	float interpolatedPlayheadPosition;
 
 	void Start () {
 		lastReportedPlayheadPosition = audioSource.time;
 		interpolatedPlayheadPosition = rhythmSettings.indicatorTravelTime * -1 + rhythmSettings.visualOffset;
-		audioSource.PlayDelayed (rhythmSettings.indicatorTravelTime);
+		totalPlayTime = rhythmSettings.indicatorTravelTime * -1 + rhythmSettings.visualOffset;
+		OnReadPlayheadPosition += CheckForAudioPlay;
+
 	}
 
 	void Update () {
@@ -31,6 +33,15 @@ public class SongManager : MonoBehaviour {
 		}
 		if (OnReadPlayheadPosition != null) {
 			OnReadPlayheadPosition (deltaSongTime);
+		}
+	}
+
+	void CheckForAudioPlay (float deltaSongTime) {
+		totalPlayTime += deltaSongTime;
+		if (totalPlayTime >= 0) {
+			audioSource.Play ();
+			audioSource.time = totalPlayTime;
+			OnReadPlayheadPosition -= CheckForAudioPlay;
 		}
 	}
 }

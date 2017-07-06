@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BeatIndicatorSpawner : MonoBehaviour {
 
-	[SerializeField] SongManager songManager;
+	[SerializeField] SongTimeManager songManager;
 	[SerializeField] RhythmSettings rhythmSettings;
-	[SerializeField] FutureBeatReader futureBeatReader;
+	[SerializeField] UpcomingBeatReader upcomingBeatReader;
 	[SerializeField] GameObject targetObject;
 	[SerializeField] GameObject indicatorPrefab;
 
@@ -18,10 +18,10 @@ public class BeatIndicatorSpawner : MonoBehaviour {
 		pool = new List<GameObject> ();
 		spawnPosition = gameObject.transform.position;
 		targetPosition = targetObject.transform.position;
-		futureBeatReader.OnFutureBeat += SpawnIndicator;
+		upcomingBeatReader.OnUpcomingBeat += SpawnIndicator;
 	}
 
-	public void SpawnIndicator() {
+	public void SpawnIndicator(float timingOvershoot) {
 		BeatIndicator beatIndicator = GetIndicator ().GetComponent<BeatIndicator> ();
 		beatIndicator.setTrajectory (spawnPosition, targetPosition, rhythmSettings.indicatorTravelTime);
 	}

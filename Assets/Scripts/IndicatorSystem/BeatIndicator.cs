@@ -11,7 +11,7 @@ public class BeatIndicator : MonoBehaviour {
 	float timeToTarget;
 	float flightTime;
 
-	public void SetSongManager (SongManager songManager) {
+	public void SetSongManager (SongTimeManager songManager) {
 		//this.songManager = songManager;
 		songManager.OnReadPlayheadPosition += UpdatePosition;
 	}
