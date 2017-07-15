@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TextManager : MonoBehaviour {
 
-	[SerializeField] InteractiveBeatSpawner interactiveBeatSpawner;
 	[SerializeField] Passage passage;
+	[SerializeField] InteractiveBeatSpawner interactiveBeatSpawner;
 
 	List<string> textLines;
 	int textIndex;
@@ -13,8 +13,8 @@ public class TextManager : MonoBehaviour {
 
 	public event System.Action<int, string, string> OnChangeText;
 
-	public char GetCurrentCharAtIndex(int relativeIndex) {
-		return textLines [textIndex] [charIndex + relativeIndex];
+	public char GetUpcomingCharacter(int upcomingCharIndex) {
+		return textLines [textIndex] [charIndex + upcomingCharIndex];
 	}
 
 	void Awake () {
@@ -24,11 +24,12 @@ public class TextManager : MonoBehaviour {
 	}
 
 	void Start () {
-		interactiveBeatSpawner.OnCreateInteractiveBeat += RegisterUpcomingBeat;
 		OnChangeText (charIndex, textLines [textIndex], textLines [textIndex + 1]);
+		interactiveBeatSpawner.OnSpawnInteractiveBeat += RegisterInteractiveBeat;
 	}
 		
 	void IncrementText() {
+		Debug.Log ("OnIncremetText");
 		charIndex = (charIndex + 1) % textLines[textIndex].Length;
 		if (charIndex == 0) {
 			textIndex = (textIndex + 1) % textLines.Count;
@@ -41,7 +42,7 @@ public class TextManager : MonoBehaviour {
 		OnChangeText (charIndex, textLines [textIndex], textLines [textIndex + 1]);
 	}
 
-	void RegisterUpcomingBeat (InteractiveBeat beat) {
-		beat.OnLifetimeEnd += IncrementText;
+	void RegisterInteractiveBeat (InteractiveBeat interactiveBeat) {
+		interactiveBeat.OnDestroy += IncrementText;
 	}
 }

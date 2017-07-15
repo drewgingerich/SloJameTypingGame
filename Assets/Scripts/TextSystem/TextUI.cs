@@ -53,7 +53,7 @@ public class TextUI : MonoBehaviour {
 				textGen.verts[indexOfTextQuad + 2].position + 
 				textGen.verts[indexOfTextQuad + 3].position
 			) / 4f;
-			RectTransform rectTrans = gameObject.GetComponent<RectTransform> ();
+			RectTransform rectTrans = textComp.rectTransform;
 			rectTrans.localPosition = new Vector3 (
 				avgPos.x * -1 - 7, rectTrans.localPosition.y , rectTrans.localPosition.z
 			);
