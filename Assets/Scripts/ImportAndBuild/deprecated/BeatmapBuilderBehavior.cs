@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SongImportBehavior : MonoBehaviour {
+public class SongPackageBuilderBehavior : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
