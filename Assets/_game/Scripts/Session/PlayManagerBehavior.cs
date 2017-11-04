@@ -24,7 +24,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 		BeatTimeManager beatManager = new BeatTimeManager (spawner);
 		BeatActivityMonitor activityMonitor = new BeatActivityMonitor (spawner);
 		TextManager textManager = new TextManager (text, spawner);
-		ScoreManager scoreManager = new ScoreManager (textManager);
+		ScoringChecker scoreManager = new ScoringChecker (textManager);
 
 		audioPlayer.OnEndSection += EndPlay;
 		mapReader.OnFinishMap += EndPlay;

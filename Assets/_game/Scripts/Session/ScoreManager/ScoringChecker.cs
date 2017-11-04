@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreManager {
+public class ScoringChecker {
 
 	TextManager textManager;
 
 	public event System.Action OnScoreBeat;
 
-	public ScoreManager (TextManager textManager) {
+	public ScoringChecker (TextManager textManager) {
 		this.textManager = textManager;
 	}
 
-	public void UpdateScore (int numberOfActiveBeats, List<char> inputChars) {
-		while (numberOfActiveBeats > 0) {
+	public void CheckForScores (List<Beat> activeBeats, List<char> inputChars) {
+		while (activeBeats.Count > 0) {
 			char desiredChar = textManager.GetNextCharacter ();
 			bool matchFound = FindMatch (desiredChar, inputChars);
 			if (!matchFound)
 				return;
-			numberOfActiveBeats--;
+			activeBeats.RemoveAt (0);
 			if (OnScoreBeat != null)
 				OnScoreBeat ();
 		}

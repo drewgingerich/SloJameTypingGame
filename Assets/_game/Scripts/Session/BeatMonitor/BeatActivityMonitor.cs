@@ -28,14 +28,14 @@ public class BeatActivityMonitor {
 		beat.OnDestroy -= DeregisterBeat;
 	}
 
-	public int ReportNumberOfActiveBeats () {
-		int numberOfActiveBeats = 0;
+	public List<Beat> ReportActiveBeats () {
+		List<Beat> activeBeats = new List<Beat> ();
 		foreach (Beat beat in monitoredBeats) {
 			if (beat.timeToTarget <= activeTimeWindowHalfwidth * -1)
 				DeregisterBeat (beat);
 			else if (beat.timeToTarget <= activeTimeWindowHalfwidth)
-				numberOfActiveBeats++;
+				activeBeats.Add (beat);
 		}
-		return numberOfActiveBeats;
+		return activeBeats;
 	}
 }
