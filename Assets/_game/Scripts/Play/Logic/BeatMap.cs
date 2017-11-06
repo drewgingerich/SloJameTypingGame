@@ -6,6 +6,10 @@ public class BeatMap  {
 
 	public List<float> BeatTimes { get; private set; }
 
+	public BeatMap (List<float> beatTimes) {
+		BeatTimes = beatTimes;
+	}
+
 	public BeatMap (SongInfo songInfo, int beatMapIndex) {
 		float quarterNoteTime = 60 / songInfo.bpm;
 		float indexTime = quarterNoteTime / 48;

@@ -36,7 +36,7 @@ public class AudioSectionPlayerControllerTests {
 		controller.PlayAudioSection (startTime, someEndTime);
 		float freshPositionReport = startTime + 1;
 		float capturedPosition = float.NegativeInfinity;
-		controller.OnReadPosition += (position) => capturedPosition = position;
+		controller.OnUpdatePosition += (position) => capturedPosition = position;
 
 		controller.MonitorSectionProgress (freshPositionReport, someTimeChange);
 
@@ -49,7 +49,7 @@ public class AudioSectionPlayerControllerTests {
 		controller.PlayAudioSection (startTime, someEndTime);
 		float freshPositionReport = startTime + 1;
 		float capturedPosition = float.NegativeInfinity;
-		controller.OnReadPosition += (position) => capturedPosition = position;
+		controller.OnUpdatePosition += (position) => capturedPosition = position;
 
 		controller.MonitorSectionProgress (freshPositionReport, someTimeChange);
 
@@ -62,7 +62,7 @@ public class AudioSectionPlayerControllerTests {
 		controller.PlayAudioSection (startTime, someEndTime);
 		float freshPositionReport = startTime + 1;
 		float capturedPosition = float.NegativeInfinity;
-		controller.OnReadPosition += (position) => capturedPosition = position;
+		controller.OnUpdatePosition += (position) => capturedPosition = position;
 
 		controller.MonitorSectionProgress (freshPositionReport, someTimeChange);
 
@@ -101,7 +101,7 @@ public class AudioSectionPlayerControllerTests {
 		controller.paused = true;
 		float somePositionReport = 8;
 		bool eventEmitted = false;
-		controller.OnReadPosition += (_) => eventEmitted = true;
+		controller.OnUpdatePosition += (_) => eventEmitted = true;
 
 		controller.MonitorSectionProgress (somePositionReport, someTimeChange);
 

@@ -5,8 +5,8 @@ using UnityEngine;
 public class IndicatorSpawnerBehavior : MonoBehaviour {
 
 	[SerializeField] GameObject indicatorPrefab;
-	[SerializeField] Vector3 indicatorSpawn;
-	[SerializeField] Vector3 indicatorTarget;
+	[SerializeField] Transform indicatorSpawn;
+	[SerializeField] Transform indicatorTarget;
 
 	public void Wire (BeatSpawner spawner) {
 		spawner.OnSpawnBeat += SpawnIndicator;
@@ -14,7 +14,8 @@ public class IndicatorSpawnerBehavior : MonoBehaviour {
 
 	void SpawnIndicator (Beat beat) {
 		GameObject newIndicatorObject = Instantiate (indicatorPrefab);
+		newIndicatorObject.transform.parent = gameObject.transform;
 		IndicatorBehavior newIndicatorBehavior = newIndicatorObject.GetComponent<IndicatorBehavior> ();
-		newIndicatorBehavior.Wire (beat, indicatorSpawn, indicatorTarget);
+		newIndicatorBehavior.Wire (beat, indicatorSpawn.position, indicatorTarget.position);
 	}
 }

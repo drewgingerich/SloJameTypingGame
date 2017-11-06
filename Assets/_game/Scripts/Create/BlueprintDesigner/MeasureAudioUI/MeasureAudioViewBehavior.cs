@@ -15,7 +15,7 @@ public class MeasureAudioViewBehavior : MonoBehaviour {
 		stopButton.interactable = false;
 
 		designer.OnShiftMeasure += clipManager.SetClipBounds;
-        audioSectionManager.OnReadPosition += clipManager.MonitorClipProgress;
+        audioSectionManager.OnUpdatePosition += clipManager.MonitorClipProgress;
         playButton.onClick.AddListener ( () => clipManager.PlayAudio () );
         stopButton.onClick.AddListener ( () => clipManager.StopAudio () );
 

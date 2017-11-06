@@ -7,18 +7,21 @@ public class PlayLoop {
 	BeatMapReader beatMapReader;
 	BeatTimeManager beatTimeManager;
 	BeatActivityMonitor beatActivityMonitor;
-	ScoringChecker scoreManager;
+	ScoringChecker scoringChecker;
 
-	public PlayLoop (BeatMapReader beatMapReader, BeatTimeManager beatTimeManager, BeatActivityMonitor beatActivityMonitor) {
+	public PlayLoop (BeatMapReader beatMapReader, BeatTimeManager beatTimeManager, 
+		BeatActivityMonitor beatActivityMonitor, ScoringChecker scoringChecker) 
+	{
 		this.beatMapReader = beatMapReader;
 		this.beatTimeManager = beatTimeManager;
 		this.beatActivityMonitor = beatActivityMonitor;
+		this.scoringChecker = scoringChecker;
 	}
 
 	public void Loop (float audioTime, List<char> inputChars) {
 		beatMapReader.ReadMapUpToTime (audioTime);
 		beatTimeManager.UpdateBeatTimes (audioTime);
 		List<Beat> activeBeats = beatActivityMonitor.ReportActiveBeats ();
-		scoreManager.CheckForScores(activeBeats, inputChars);
+		scoringChecker.CheckForScores(activeBeats, inputChars);
 	}
 }

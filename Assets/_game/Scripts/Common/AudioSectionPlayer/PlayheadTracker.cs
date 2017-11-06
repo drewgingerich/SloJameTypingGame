@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class PlayheadTracker {
 
-	public event System.Action<float> OnReadPosition;
-	public event System.Action<float> OnChangePosition;
+	public event System.Action<float> OnUpdatePosition;
 
 	float lastReportedPosition;
 	float position;
-	float change;
 
 	public void InitializeTracking (float startingPosition) {
 		lastReportedPosition = startingPosition;
@@ -20,24 +18,20 @@ public class PlayheadTracker {
 		if (reportedPosition == lastReportedPosition) {
 			TrackByTimeChange (timeChange);
 		} else {
-			change = reportedPosition - position;
 			position = reportedPosition;
 			lastReportedPosition = reportedPosition;
 		}
-		ReportPosition ();
+		UpdatePosition ();
 	}
 
 	public void TrackByTimeChange (float timeChange) {
 		position += timeChange;
-		change = timeChange;
-		ReportPosition ();
+		UpdatePosition ();
 	}
 
-	void ReportPosition () {
-		if (OnReadPosition != null) {
-			OnReadPosition (position);
+	void UpdatePosition () {
+		if (OnUpdatePosition != null) {
+			OnUpdatePosition (position);
 		}
-		if (OnChangePosition != null)
-			OnChangePosition (change);
 	}
 }

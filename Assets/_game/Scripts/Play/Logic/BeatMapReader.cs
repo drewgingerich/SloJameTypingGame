@@ -15,7 +15,7 @@ public class BeatMapReader {
 	public BeatMapReader (BeatMap beatMap) {
 		this.beatMap = beatMap;
 		LookForNextBeat (0);
-		}
+	}
 
 	public void ReadMapUpToTime (float audioTime) {
 		while (audioTime >= spawnTime) {

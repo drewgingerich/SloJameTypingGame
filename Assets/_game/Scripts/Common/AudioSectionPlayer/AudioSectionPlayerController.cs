@@ -6,10 +6,18 @@ public class AudioSectionPlayerController {
 
 	public event System.Action OnStartSection;
 	public event System.Action OnEndSection;
-	public event System.Action<float> OnStartAudio;
-	public event System.Action OnEndAudio;
-	public event System.Action<float> OnReadPosition;
-	public event System.Action<float> OnChangePosition;
+	public event System.Action<float> OnStartAudio {
+		add { this.stateManager.OnStartAudio += value; }
+		remove {this.stateManager.OnStartAudio -= value; }
+	}
+	public event System.Action OnEndAudio {
+		add { this.stateManager.OnEndAudio += value; }
+		remove {this.stateManager.OnEndAudio -= value; }
+	}
+	public event System.Action<float> OnUpdatePosition {
+		add { this.tracker.OnUpdatePosition += value; }
+		remove {this.tracker.OnUpdatePosition -= value; }
+	}
 
 	public bool paused { get; set; }
 
@@ -21,20 +29,7 @@ public class AudioSectionPlayerController {
 
 	public AudioSectionPlayerController (PlayheadTracker tracker, AudioSectionStateManager stateManager) {
 		this.stateManager = stateManager;
-		stateManager.OnStartAudio += (position) => {
-			if (OnStartAudio != null) OnStartAudio (position);
-		};
-		stateManager.OnEndAudio += () => {
-			if (OnEndAudio != null) OnEndAudio ();
-		};
 		this.tracker = tracker;
-		tracker.OnReadPosition += (position) => {
-			UpdatePositionState (position);
-			if (OnReadPosition != null) OnReadPosition (position);
-		};
-		tracker.OnChangePosition += (change) => {
-			if (OnChangePosition != null) OnChangePosition (change);
-		};
 		paused = true;
 	}
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayManagerBehavior : MonoBehaviour {
 
 	[SerializeField] AudioSectionPlayerBehavior audioPlayer;
+	[SerializeField] IndicatorSpawnerBehavior indicatorSpawner;
 
 	public event System.Action OnEndPlay;
 
@@ -13,7 +14,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 	public void StartPlay (AudioClip song, BeatMap beatMap, string text) {
 		Wire (beatMap, text);
 
-		audioPlayer.OnChangePosition += PlayLoop;
+		audioPlayer.OnUpdatePosition += PlayLoop;
 		audioPlayer.LoadAudioClip (song);
 		audioPlayer.PlayAudioSection (0, song.length);
 	}
@@ -26,10 +27,13 @@ public class PlayManagerBehavior : MonoBehaviour {
 		TextManager textManager = new TextManager (text, spawner);
 		ScoringChecker scoringChecker = new ScoringChecker (textManager);
 		ScoreKeeper scoreKeeper = new ScoreKeeper (activityMonitor, scoringChecker);
+		playLoop = new PlayLoop (mapReader, beatManager, activityMonitor, scoringChecker);
 
 		audioPlayer.OnEndSection += EndPlay;
 		mapReader.OnFinishMap += EndPlay;
 		textManager.OnTextEnd += EndPlay;
+
+		indicatorSpawner.Wire (spawner);
 	}
 	
 	void PlayLoop (float audioTime) {
