@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SessionStarter : MonoBehaviour {
+public class MockSessionStarter : MonoBehaviour {
 
 	[SerializeField] PlayManagerBehavior managerBehavior;
 	[SerializeField] AudioClip clip;
