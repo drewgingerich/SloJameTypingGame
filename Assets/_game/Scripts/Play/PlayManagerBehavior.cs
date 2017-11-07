@@ -9,7 +9,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 	public event System.Action OnEndPlay;
 
-	PlayLoop playLoop;
+	PlayLoopManager playLoopManager;
 
 	public void StartPlay (AudioClip song, BeatMap beatMap, string text) {
 		Wire (beatMap, text);
@@ -27,7 +27,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 		TextManager textManager = new TextManager (text, spawner);
 		ScoringChecker scoringChecker = new ScoringChecker (textManager);
 		ScoreKeeper scoreKeeper = new ScoreKeeper (activityMonitor, scoringChecker);
-		playLoop = new PlayLoop (mapReader, beatManager, activityMonitor, scoringChecker);
+		playLoopManager = new PlayLoopManager (mapReader, beatManager, activityMonitor, scoringChecker);
 
 		audioPlayer.OnEndSection += EndPlay;
 		mapReader.OnFinishMap += EndPlay;
@@ -38,7 +38,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 	
 	void PlayLoop (float audioTime) {
 		List<char> inputString = new List<char> (Input.inputString);
-		playLoop.Loop (audioTime, inputString);
+		playLoopManager.PlayLoop (audioTime, inputString);
 	}
 
 	void EndPlay () {
