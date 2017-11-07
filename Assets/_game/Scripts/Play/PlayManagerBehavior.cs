@@ -10,6 +10,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 	public event System.Action OnEndPlay;
 
 	PlayLoopManager playLoopManager;
+	ScoreKeeper scoreKeeper;
 
 	public void StartPlay (AudioClip song, BeatMap beatMap, string text) {
 		Wire (beatMap, text);
@@ -26,12 +27,11 @@ public class PlayManagerBehavior : MonoBehaviour {
 		BeatActivityMonitor activityMonitor = new BeatActivityMonitor (spawner);
 		TextManager textManager = new TextManager (text, spawner);
 		ScoringChecker scoringChecker = new ScoringChecker (textManager);
-		ScoreKeeper scoreKeeper = new ScoreKeeper (activityMonitor, scoringChecker);
+		scoreKeeper = new ScoreKeeper (activityMonitor, scoringChecker);
+		SessionEndMonitor endMonitor = new SessionEndMonitor (audioPlayer, mapReader, spawner, textManager);
 		playLoopManager = new PlayLoopManager (mapReader, beatManager, activityMonitor, scoringChecker);
 
-		audioPlayer.OnEndSection += EndPlay;
-		mapReader.OnFinishMap += EndPlay;
-		textManager.OnTextEnd += EndPlay;
+		endMonitor.OnEndSession += EndPlay;
 
 		indicatorSpawner.Wire (spawner);
 	}
