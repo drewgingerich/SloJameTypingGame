@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayLoop {
+public class PlayLoopManager {
 
 	BeatMapReader beatMapReader;
 	BeatTimeManager beatTimeManager;
 	BeatActivityMonitor beatActivityMonitor;
 	ScoringChecker scoringChecker;
 
-	public PlayLoop (BeatMapReader beatMapReader, BeatTimeManager beatTimeManager, 
+	public PlayLoopManager (BeatMapReader beatMapReader, BeatTimeManager beatTimeManager, 
 		BeatActivityMonitor beatActivityMonitor, ScoringChecker scoringChecker) 
 	{
 		this.beatMapReader = beatMapReader;
@@ -18,7 +18,7 @@ public class PlayLoop {
 		this.scoringChecker = scoringChecker;
 	}
 
-	public void Loop (float audioTime, List<char> inputChars) {
+	public void PlayLoop (float audioTime, List<char> inputChars) {
 		beatMapReader.ReadMapUpToTime (audioTime);
 		beatTimeManager.UpdateBeatTimes (audioTime);
 		List<Beat> activeBeats = beatActivityMonitor.ReportActiveBeats ();
