@@ -7,7 +7,8 @@ public class BeatMapReader {
 	BeatMap beatMap;
 	int mapIndex;
 	float spawnTime;
-	float readAheadTime = 1.5f;
+	float readAheadTime = 3f;
+	bool mapFinished;
 
 	public event System.Action<float, float> OnReadBeat;
 	public event System.Action OnFinishMap;
@@ -18,7 +19,9 @@ public class BeatMapReader {
 	}
 
 	public void ReadMapUpToTime (float audioTime) {
-		while (audioTime >= spawnTime) {
+		if (mapFinished)
+			return;
+		while (audioTime >= spawnTime && !mapFinished) {
 			float targetTime = spawnTime + readAheadTime;
 			if (OnReadBeat != null) 
 				OnReadBeat (spawnTime, targetTime);
@@ -27,7 +30,8 @@ public class BeatMapReader {
 	}
 
 	void LookForNextBeat (int nextIndex) {
-		if (mapIndex >= beatMap.BeatTimes.Count && OnFinishMap != null) {
+		if (nextIndex >= beatMap.BeatTimes.Count && OnFinishMap != null) {
+			mapFinished = true;
 			OnFinishMap ();
 			return;
 		}
