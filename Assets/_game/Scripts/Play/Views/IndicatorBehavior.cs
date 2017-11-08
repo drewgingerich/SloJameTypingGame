@@ -19,7 +19,6 @@ public class IndicatorBehavior : MonoBehaviour {
 	}
 
 	void Destroy () {
-		Debug.Log ("hi");
 		Destroy (gameObject);
 	}
 }

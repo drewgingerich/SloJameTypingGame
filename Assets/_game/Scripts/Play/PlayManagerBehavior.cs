@@ -7,6 +7,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 	[SerializeField] AudioSectionPlayerBehavior audioPlayer;
 	[SerializeField] IndicatorSpawnerBehavior indicatorSpawner;
 	[SerializeField] TextViewBehavior textView;
+	[SerializeField] HitView hitView;
 
 	public event System.Action<float> OnEndPlay;
 
@@ -39,6 +40,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 		indicatorSpawner.Wire (spawner);
 		textView.Wire (textManager);
+		hitView.Wire (activityMonitor, scoringChecker);
 
 		textManager.LoadText (text);
 	}
