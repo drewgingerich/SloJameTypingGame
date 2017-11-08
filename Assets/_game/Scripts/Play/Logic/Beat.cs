@@ -21,7 +21,7 @@ public class Beat {
 		timeToTarget = targetTime - audioTime;
 		if (OnUpdateTimeToTarget != null)
 			OnUpdateTimeToTarget (this, timeToTarget);
-		float progressRatio = (1 - timeToTarget) / travelTime;
+		float progressRatio = 1 - (timeToTarget / travelTime);
 		if (OnUpdateProgressRatio != null)
 			OnUpdateProgressRatio (this, progressRatio);
 	}
@@ -29,5 +29,8 @@ public class Beat {
 	public void Destroy () {
 		if (OnDestroy != null)
 			OnDestroy (this);
+		OnUpdateTimeToTarget = null;
+		OnUpdateProgressRatio = null;
+		OnDestroy = null;
 	}
 }

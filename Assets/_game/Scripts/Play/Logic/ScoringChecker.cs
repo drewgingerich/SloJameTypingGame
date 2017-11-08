@@ -18,6 +18,7 @@ public class ScoringChecker {
 			bool matchFound = FindMatch (desiredChar, inputChars);
 			if (!matchFound)
 				return;
+			activeBeats[0].Destroy ();
 			activeBeats.RemoveAt (0);
 			if (OnScoreBeat != null)
 				OnScoreBeat ();

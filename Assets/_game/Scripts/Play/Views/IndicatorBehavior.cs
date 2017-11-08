@@ -9,11 +9,17 @@ public class IndicatorBehavior : MonoBehaviour {
 
 	public void Wire (Beat beat, Vector3 spawnPosition, Vector3 targetPosition) {
 		beat.OnUpdateProgressRatio += UpdateBeatUI;
+		beat.OnDestroy += (_) => Destroy ();
 		this.spawnPosition = spawnPosition;
-		travelVector = spawnPosition - targetPosition;
+		travelVector = targetPosition - spawnPosition;
 	}
 
 	void UpdateBeatUI (Beat _, float progressRatio) {
-		gameObject.transform.position = spawnPosition - travelVector * progressRatio;
+		gameObject.transform.position = spawnPosition + travelVector * progressRatio;
+	}
+
+	void Destroy () {
+		Debug.Log ("hi");
+		Destroy (gameObject);
 	}
 }

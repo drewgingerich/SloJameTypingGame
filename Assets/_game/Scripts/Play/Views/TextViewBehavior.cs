@@ -16,14 +16,46 @@ public class TextViewBehavior : MonoBehaviour {
 	}
 
 	void DisplayText (int currentCharIndex) {
-		StringBuilder sb = new StringBuilder ();
-		sb.Append (System.String.Format ("<b><color=orange>{0}</color></b>", text[currentCharIndex]));
-		sb.Append (text.Substring (currentCharIndex + 1));
-		textComp.text = sb.ToString ();
+		textComp.text = FormatText (currentCharIndex);
+		PositionText ();
+	}
+
+	string FormatText(int currentCharIndex) {
+		char currentChar = text [currentCharIndex];
+		if (currentChar == ' ')
+			currentChar = '_';
+
+		StringBuilder stringBuilder = new StringBuilder ();
+		stringBuilder.Append (System.String.Format ("<b><color=orange>{0}</color></b>", currentChar));
+		stringBuilder.Append (text.Substring (currentCharIndex + 1));
+		return stringBuilder.ToString ();
+	}
+
+	void PositionText () {
+		TextGenerator textGen = new TextGenerator (textComp.text.Length);
+		Vector2 extents = textComp.gameObject.GetComponent<RectTransform>().rect.size;
+		textGen.Populate (textComp.text, textComp.GetGenerationSettings (extents));
+
+		int indexOfTextQuad = 0;
+		if (indexOfTextQuad < textGen.vertexCount) {
+			Vector3 avgPos = (
+				textGen.verts[indexOfTextQuad].position + 
+				textGen.verts[indexOfTextQuad + 1].position + 
+				textGen.verts[indexOfTextQuad + 2].position + 
+				textGen.verts[indexOfTextQuad + 3].position
+			) / 4f;
+			RectTransform rectTrans = textComp.rectTransform;
+			rectTrans.localPosition = new Vector3 (
+				avgPos.x * -1 - 5, rectTrans.localPosition.y , rectTrans.localPosition.z
+			);
+		}
+		else {
+			Debug.LogError ("Out of text bound");
+		}
 	}
 }
 
-	// void SetTextColors(string currentLine, int charIndex, string nextLine) {
+	// void FormatText(string currentLine, int charIndex, string nextLine) {
 	// 	StringBuilder stringBuilder = new StringBuilder ();
 	// 	stringBuilder.Append (currentLine);
 	// 	stringBuilder.Append ('\n');
@@ -45,7 +77,7 @@ public class TextViewBehavior : MonoBehaviour {
 	// 	textComp.text = stringBuilder.ToString();
 	// }
 
-	// void SetTextPositions (int charIndex) {
+	// void PositionText (int charIndex) {
 	// 	TextGenerator textGen = new TextGenerator (textComp.text.Length);
 	// 	Vector2 extents = textComp.gameObject.GetComponent<RectTransform>().rect.size;
 	// 	textGen.Populate (textComp.text, textComp.GetGenerationSettings (extents));

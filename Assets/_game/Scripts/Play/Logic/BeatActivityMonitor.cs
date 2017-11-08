@@ -28,7 +28,8 @@ public class BeatActivityMonitor {
 				activeBeats.Add (beat);
 		}
 		foreach (Beat beat in missedBeats) {
-			DeregisterBeat (beat);
+			beat.Destroy ();
+			// DeregisterBeat (beat);
 			if (OnMissedBeat != null)
 				OnMissedBeat (beat);
 		}
@@ -42,6 +43,5 @@ public class BeatActivityMonitor {
 
 	void DeregisterBeat (Beat beat) {
 		monitoredBeats.Remove (beat);
-		beat.OnDestroy -= DeregisterBeat;
 	}
 }

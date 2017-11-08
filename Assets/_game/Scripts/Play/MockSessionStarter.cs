@@ -6,7 +6,7 @@ public class MockSessionStarter : MonoBehaviour {
 
 	[SerializeField] PlayManagerBehavior managerBehavior;
 	[SerializeField] AudioClip clip;
-	[SerializeField] string text;
+	[SerializeField] [TextArea] string text;
 	[SerializeField] List<float> beatTimes;
 
 	// Use this for initialization

@@ -18,7 +18,6 @@ public class BeatTimeManager {
 
 	void DeregisterBeat (Beat beat) {
 		beats.Remove (beat);
-		beat.OnDestroy -= DeregisterBeat;
 	}
 
 	public void UpdateBeatTimes (float audioTime) {
