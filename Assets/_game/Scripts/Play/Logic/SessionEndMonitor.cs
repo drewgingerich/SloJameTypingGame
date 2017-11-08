@@ -6,14 +6,14 @@ public class SessionEndMonitor {
 
 	public event System.Action OnEndSession;
 
-	bool lastBeatSpawned;
+	bool lastBeatSpawned = false;
 	Beat mostRecentBeat;
 
 	public SessionEndMonitor (AudioSectionPlayerBehavior audioSectionPlayer, BeatMapReader mapReader, 
 		BeatSpawner spawner, TextManager textManager) 
 	{
 		audioSectionPlayer.OnEndSection += EndSession;
-		textManager.OnTextEnd += EndSession;
+		textManager.OnEndText += EndSession;
 		spawner.OnSpawnBeat += RegisterBeat;
 		mapReader.OnFinishMap += () => lastBeatSpawned = true;
 	}
@@ -21,15 +21,17 @@ public class SessionEndMonitor {
 	void RegisterBeat (Beat beat) {
 		if (mostRecentBeat != null)
 			DeregisterBeat (mostRecentBeat);
-		beat.OnDestroy += EndSessionDueToLastBeat;
+		mostRecentBeat = beat;
+		mostRecentBeat.OnDestroy += CheckIfLastBeat;
 	}
 
 	void DeregisterBeat (Beat beat) {
-		beat.OnDestroy -= EndSessionDueToLastBeat;
+		beat.OnDestroy -= CheckIfLastBeat;
 	}
 
-	void EndSessionDueToLastBeat (Beat _) {
-		EndSession ();
+	void CheckIfLastBeat (Beat _) {
+		if (lastBeatSpawned)
+			EndSession ();
 	}
 
 	void EndSession () {

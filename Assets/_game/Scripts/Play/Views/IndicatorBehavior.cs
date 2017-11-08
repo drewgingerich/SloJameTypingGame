@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class IndicatorBehavior : MonoBehaviour {
 
-	Beat beat;
 	Vector3 travelVector;
 	Vector3 spawnPosition;
 
 	public void Wire (Beat beat, Vector3 spawnPosition, Vector3 targetPosition) {
-		this.beat = beat;
 		beat.OnUpdateProgressRatio += UpdateBeatUI;
 		this.spawnPosition = spawnPosition;
 		travelVector = spawnPosition - targetPosition;

@@ -29,6 +29,8 @@ public class BeatActivityMonitor {
 		}
 		foreach (Beat beat in missedBeats) {
 			DeregisterBeat (beat);
+			if (OnMissedBeat != null)
+				OnMissedBeat (beat);
 		}
 		return activeBeats;
 	}

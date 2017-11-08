@@ -6,8 +6,9 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 	[SerializeField] AudioSectionPlayerBehavior audioPlayer;
 	[SerializeField] IndicatorSpawnerBehavior indicatorSpawner;
+	[SerializeField] TextViewBehavior textView;
 
-	public event System.Action OnEndPlay;
+	public event System.Action<float> OnEndPlay;
 
 	PlayLoopManager playLoopManager;
 	ScoreKeeper scoreKeeper;
@@ -22,18 +23,24 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 	void Wire (BeatMap beatMap, string text) {
 		BeatMapReader mapReader = new BeatMapReader (beatMap);
+		TextManager textManager = new TextManager ();
+
 		BeatSpawner spawner = new BeatSpawner (mapReader);
 		BeatTimeManager beatManager = new BeatTimeManager (spawner);
 		BeatActivityMonitor activityMonitor = new BeatActivityMonitor (spawner);
-		TextManager textManager = new TextManager (text, spawner);
+
 		ScoringChecker scoringChecker = new ScoringChecker (textManager);
 		scoreKeeper = new ScoreKeeper (activityMonitor, scoringChecker);
-		SessionEndMonitor endMonitor = new SessionEndMonitor (audioPlayer, mapReader, spawner, textManager);
-		playLoopManager = new PlayLoopManager (mapReader, beatManager, activityMonitor, scoringChecker);
+		TextIncrementManager textIncManager = new TextIncrementManager (activityMonitor, scoringChecker, textManager);
 
+		playLoopManager = new PlayLoopManager (mapReader, beatManager, activityMonitor, scoringChecker);
+		SessionEndMonitor endMonitor = new SessionEndMonitor (audioPlayer, mapReader, spawner, textManager);
 		endMonitor.OnEndSession += EndPlay;
 
 		indicatorSpawner.Wire (spawner);
+		textView.Wire (textManager);
+
+		textManager.LoadText (text);
 	}
 	
 	void PlayLoop (float audioTime) {
@@ -42,7 +49,8 @@ public class PlayManagerBehavior : MonoBehaviour {
 	}
 
 	void EndPlay () {
+		float scorePercentage = scoreKeeper.GetScorePercentage ();
 		if (OnEndPlay != null)
-			OnEndPlay ();
+			OnEndPlay (scorePercentage);
 	}
 }
