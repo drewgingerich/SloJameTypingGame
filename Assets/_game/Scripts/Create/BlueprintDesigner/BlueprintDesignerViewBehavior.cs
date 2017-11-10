@@ -14,7 +14,7 @@ public class BlueprintDesignerViewBehavior : MonoBehaviour {
 
 	BeatMapBlueprint blueprint;
 	BlueprintDesigner designer;
-	MeasureAudioClipManager clipManager;
+	MeasureAudioController audioSectioner;
 	SongInfo songInfo;
 
 	public event System.Action OnBack;
@@ -31,12 +31,12 @@ public class BlueprintDesignerViewBehavior : MonoBehaviour {
 		blueprint = songInfo.blueprints[0];
 
 		designer = new BlueprintDesigner ();
-		clipManager = new MeasureAudioClipManager (songInfo.bpm, songInfo.songDuration);
+		audioSectioner = new MeasureAudioController (songInfo.bpm);
 
-		measureView.Wire (designer, clipManager);
+		measureView.Wire (designer, audioSectioner);
 		beatInfoView.Wire (designer);
 		measureInfoView.Wire (designer, blueprint);
-		measureAudioView.Wire (designer, clipManager, trackName);
+		measureAudioView.Wire (designer, audioSectioner, trackName);
 
 		designer.LoadBlueprint (blueprint);
 	}

@@ -18,8 +18,8 @@ public class PlayManagerBehavior : MonoBehaviour {
 		Wire (beatMap, text);
 
 		audioPlayer.OnUpdatePosition += PlayLoop;
-		audioPlayer.LoadAudioClip (song);
-		audioPlayer.PlayAudioSection (0, song.length);
+		audioPlayer.LoadClip (song);
+		audioPlayer.PlaySection (0, song.length);
 	}
 
 	void Wire (BeatMap beatMap, string text) {

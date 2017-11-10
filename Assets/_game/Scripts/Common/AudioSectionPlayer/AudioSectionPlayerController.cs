@@ -29,6 +29,7 @@ public class AudioSectionPlayerController {
 	public AudioSectionPlayerController (PlayheadTracker tracker, AudioSectionStateManager stateManager) {
 		this.stateManager = stateManager;
 		this.tracker = tracker;
+		tracker.OnUpdatePosition += UpdatePositionState;
 		paused = true;
 	}
 
@@ -37,7 +38,7 @@ public class AudioSectionPlayerController {
 	}
 
 	public void PlayAudioSection (float startTime, float endTime) {
-		this.sectionEndTime = endTime;
+		sectionEndTime = endTime;
 		stateManager.InitializeStateManagment (startTime);
 		tracker.InitializeTracking (startTime);
 		StartSection ();

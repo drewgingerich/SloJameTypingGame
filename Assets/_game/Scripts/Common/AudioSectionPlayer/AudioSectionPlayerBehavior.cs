@@ -29,13 +29,18 @@ public class AudioSectionPlayerBehavior : MonoBehaviour {
 
 	AudioSectionPlayerController controller;
 
-	public void LoadAudioClip (AudioClip clip) {
+	public void LoadClip (AudioClip clip) {
 		audioSource.clip = clip;
 		controller.SetClipLength (clip.length);
 	}
 
-	public void PlayAudioSection (float startTime, float endTime) {
+	public void PlaySection (float startTime, float endTime) {
 		controller.PlayAudioSection (startTime, endTime);
+	}
+
+	public void Stop () {
+		controller.paused = true;
+		audioSource.Stop ();
 	}
 
 	public void Pause () {
@@ -48,16 +53,16 @@ public class AudioSectionPlayerBehavior : MonoBehaviour {
 		audioSource.UnPause ();
 	}
 
+	void StartAudio (float startTime) {
+		audioSource.Play ();
+		audioSource.time = startTime;
+	}
+
 	void Awake () {
 		PlayheadTracker tracker = new PlayheadTracker ();
 		AudioSectionStateManager stateManager = new AudioSectionStateManager ();
 		controller = new AudioSectionPlayerController (tracker, stateManager);
 		controller.OnStartAudio += StartAudio;
-	}
-
-	void StartAudio (float startTime) {
-		audioSource.Play ();
-		audioSource.time = startTime;
 	}
 
 	void Update () {

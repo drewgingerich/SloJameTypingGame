@@ -5,24 +5,23 @@ using UnityEngine.UI;
 
 public class MeasureAudioViewBehavior : MonoBehaviour {
 
-	[SerializeField] AudioSectionPlayerBehavior audioSectionManager;
+	[SerializeField] AudioSectionPlayerBehavior audioSectionPlayer;
 	[SerializeField] Button playButton;
 	[SerializeField] Button stopButton;
 	[SerializeField] Text timeText;
 
-	public void Wire (BlueprintDesigner designer, MeasureAudioClipManager clipManager, string songTitle) {
+	public void Wire (BlueprintDesigner designer, MeasureAudioController controller, string songTitle) {
 		playButton.interactable = false;
 		stopButton.interactable = false;
 
-		designer.OnShiftMeasure += clipManager.SetClipBounds;
-        audioSectionManager.OnUpdatePosition += clipManager.MonitorClipProgress;
-        playButton.onClick.AddListener ( () => clipManager.PlayAudio () );
-        stopButton.onClick.AddListener ( () => clipManager.StopAudio () );
+		designer.OnShiftMeasure += (measureIndex, _) => controller.FindSectionBounds (measureIndex);
+		audioSectionPlayer.OnUpdatePosition += controller.MonitorSectionProgress;
+		playButton.onClick.AddListener (controller.StartAudio);
+		stopButton.onClick.AddListener (StopAudio);
 
-		clipManager.OnStopAudio += StopAudio;
-		clipManager.OnPlayAudio += PlayAudio;
-		clipManager.OnPlayAudioWithDelay += PlayAudioWithDelay;
-		clipManager.OnSetClipBounds += UpdateClipTimes;
+		controller.OnFindSectionBounds += DisplaySectionBounds;
+		controller.OnStartAudioSection += PlayAudio;
+		controller.OnEndSection += StopAudio;
 
 		StartCoroutine (LoadClip (SongImportManager.storagePath + songTitle + ".wav"));
 	}
@@ -30,28 +29,22 @@ public class MeasureAudioViewBehavior : MonoBehaviour {
 	IEnumerator LoadClip (string path) {
 		WWW www = new WWW ("file://" + path);
 		yield return www;
-		//audioSectionManager.LoadClip (www.GetAudioClip ());
+		audioSectionPlayer.LoadClip (www.GetAudioClip ());
 		playButton.interactable = true;
 	}
 
-	void UpdateClipTimes (float startTime, float endTime) {
+	void DisplaySectionBounds (float startTime, float endTime) {
 		timeText.text = string.Format ("{0:0.000} - {1:0.000} sec", startTime, endTime);
 	}
 
-	void PlayAudio (float startTime) {
-		//audioSectionManager.StartAudio (startTime);
-		playButton.interactable = false;
-		stopButton.interactable = true;
-	}
-
-	void PlayAudioWithDelay (float startTime, float delay) {
-		// audioSectionManager.StartAudio (startTime, delay);
+	void PlayAudio (float startTime, float endTime) {
+		audioSectionPlayer.PlaySection (startTime, endTime);
 		playButton.interactable = false;
 		stopButton.interactable = true;
 	}
 
 	void StopAudio () {
-		// audioSectionManager.StopAudio ();
+		audioSectionPlayer.Stop ();
 		playButton.interactable = true;
 		stopButton.interactable = false;
 	}
