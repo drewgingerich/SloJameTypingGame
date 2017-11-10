@@ -14,13 +14,13 @@ public class MeasureViewBehavior : MonoBehaviour {
 
 	List<GameObject> activityMarkers;
 
-	public void Wire (BlueprintDesigner designer, MeasureAudioController clipManager) {
+	public void Wire (BlueprintDesigner designer, MeasureAudioController audioController) {
 		this.designer = designer;
 		designer.OnShiftBeat += UpdateCurrentBeat;
 		designer.OnToggleBeatActivity += UpdateBeatActivity;
 		designer.OnShiftMeasure += LoadMeasure;
-		clipManager.OnUpdateSectionProgress += UpdatePlayheadMarker;
-		clipManager.OnEndSection += () => UpdatePlayheadMarker (0f);
+		audioController.OnUpdateSectionProgress += UpdatePlayheadMarker;
+		audioController.OnEndSection += () => UpdatePlayheadMarker (0f);
 	}
 
 	void Awake () {

@@ -18,6 +18,8 @@ public class MeasureAudioController {
 	}
 
 	public void FindSectionBounds (int measureIndex) {
+		if (OnEndSection != null)
+			OnEndSection ();
 		startTime = measureDuration * (measureIndex - 0.25f);
 		endTime = measureDuration * (measureIndex + 1.25f);
 		if (OnFindSectionBounds != null)
