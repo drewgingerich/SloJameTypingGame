@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MeasureAudioViewBehavior : MonoBehaviour {
+public class MeasureAudioBehavior : MonoBehaviour {
 
 	[SerializeField] AudioSectionPlayerBehavior audioSectionPlayer;
 	[SerializeField] Button playButton;
 	[SerializeField] Button stopButton;
 	[SerializeField] Text timeText;
 
-	public void Wire (BlueprintDesigner designer, MeasureAudioController controller, string songTitle) {
+	public void Wire (DesignMenuController designer, MeasureAudioController controller, string songTitle) {
 		playButton.interactable = false;
 		stopButton.interactable = false;
 

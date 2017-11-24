@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlueprintDesignerViewBehavior : MonoBehaviour {
+public class DesignMenuBehavior : MonoBehaviour {
 
 	[SerializeField] Button backButton;
 	[SerializeField] Button saveButton;
 	[SerializeField] MeasureViewBehavior measureView;
 	[SerializeField] BeatInfoViewBehavior beatInfoView;
 	[SerializeField] MeasureInfoViewBehavior measureInfoView;
-	[SerializeField] MeasureAudioViewBehavior measureAudioView;
+	[SerializeField] MeasureAudioBehavior measureAudioView;
 
 	BeatMapBlueprint blueprint;
-	BlueprintDesigner designer;
+	DesignMenuController designer;
 	MeasureAudioController audioSectioner;
 	SongData songData;
 
@@ -30,7 +30,7 @@ public class BlueprintDesignerViewBehavior : MonoBehaviour {
 			songData.blueprints.Add (new BeatMapBlueprint ());
 		blueprint = songData.blueprints[0];
 
-		designer = new BlueprintDesigner ();
+		designer = new DesignMenuController ();
 		audioSectioner = new MeasureAudioController (songData.bpm);
 
 		measureView.Wire (designer, audioSectioner);

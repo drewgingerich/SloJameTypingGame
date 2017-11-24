@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuViewBehavior : MonoBehaviour {
+public class MainMenuBehavior : MonoBehaviour {
 
 	public event System.Action OnSelectPlay;
 	public event System.Action OnSelectCreate;

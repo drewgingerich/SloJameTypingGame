@@ -10,11 +10,11 @@ public class MeasureViewBehavior : MonoBehaviour {
 	[SerializeField] GameObject beatMarker;
 	[SerializeField] GameObject playheadMarker;
 
-	BlueprintDesigner designer;
+	DesignMenuController designer;
 
 	List<GameObject> activityMarkers;
 
-	public void Wire (BlueprintDesigner designer, MeasureAudioController audioController) {
+	public void Wire (DesignMenuController designer, MeasureAudioController audioController) {
 		this.designer = designer;
 		designer.OnShiftBeat += UpdateCurrentBeat;
 		designer.OnToggleBeatActivity += UpdateBeatActivity;

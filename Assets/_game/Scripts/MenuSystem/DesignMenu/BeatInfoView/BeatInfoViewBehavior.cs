@@ -7,14 +7,14 @@ public class BeatInfoViewBehavior : MonoBehaviour {
 
 	[SerializeField] Text beatInfoText;
 
-	BlueprintDesigner.BeatValue beatValue;
+	DesignMenuController.BeatValue beatValue;
 
-	public void Wire (BlueprintDesigner designer) {
+	public void Wire (DesignMenuController designer) {
 		designer.OnShiftBeatValue += UpdateBeatValue;
 		designer.OnShiftBeat += UpdateBeatIndex;
 	}
 
-	void UpdateBeatValue (BlueprintDesigner.BeatValue beatValue) {
+	void UpdateBeatValue (DesignMenuController.BeatValue beatValue) {
 		this.beatValue = beatValue;
 	}
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BlueprintDesigner {
+public class DesignMenuController {
 
 	public enum BeatValue {
 		Sixtyfourth = 3,
@@ -29,7 +29,7 @@ public class BlueprintDesigner {
 	public event System.Action<int, bool> OnToggleBeatActivity;
 	public event System.Action<BeatValue> OnShiftBeatValue;
 
-	public BlueprintDesigner () {
+	public DesignMenuController () {
 		measureIndex = 0;
 		beatIndex = 0;
 		beatValue = BeatValue.Quarter;

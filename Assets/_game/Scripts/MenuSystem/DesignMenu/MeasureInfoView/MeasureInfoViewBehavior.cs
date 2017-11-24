@@ -9,7 +9,7 @@ public class MeasureInfoViewBehavior : MonoBehaviour {
 
 	List<bool[]> measures;
 
-	public void Wire (BlueprintDesigner designer, BeatMapBlueprint blueprint) {
+	public void Wire (DesignMenuController designer, BeatMapBlueprint blueprint) {
 		measures = blueprint.measures;
 		designer.OnShiftMeasure += UpdateMeasureInfo;
 	}

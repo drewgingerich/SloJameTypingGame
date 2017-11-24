@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatorViewBehavior : MonoBehaviour {
+public class MenuSystemBehavior : MonoBehaviour {
 
 	[SerializeField] SelectMusicUIBehavior musicSelector;
-	[SerializeField] ImportMusicUIBehavior musicImporter;
-	[SerializeField] BlueprintDesignerViewBehavior blueprintDesigner;
+	[SerializeField] ImportMenuBehavior musicImporter;
+	[SerializeField] DesignMenuBehavior blueprintDesigner;
 
 	GameObject currentMenuObject;
 

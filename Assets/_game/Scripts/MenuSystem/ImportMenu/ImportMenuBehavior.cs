@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ImportMusicUIBehavior : MonoBehaviour {
+public class ImportMenuBehavior : MonoBehaviour {
 
 	[SerializeField] Button backButton;
 	[SerializeField] Button importButton;

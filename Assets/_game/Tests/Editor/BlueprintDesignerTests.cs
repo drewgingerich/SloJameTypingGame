@@ -7,12 +7,12 @@ using System.Collections;
 public class BlueprintDesignerTests {
 
 	BeatMapBlueprint blueprint;
-	BlueprintDesigner designer;
+	DesignMenuController designer;
 
 	[SetUp]
 	public void SetUp () {
 		blueprint = new BeatMapBlueprint ();
-		designer = new BlueprintDesigner ();
+		designer = new DesignMenuController ();
 	}
 
 	[Test]
@@ -25,7 +25,7 @@ public class BlueprintDesignerTests {
 	[Test]
 	public void LoadBlueprint_NewBlueprint_EmittedBeatValueEqualsQuarter () {
 		designer.OnShiftBeatValue += (value) => {
-			Assert.That (value == BlueprintDesigner.BeatValue.Quarter);
+			Assert.That (value == DesignMenuController.BeatValue.Quarter);
 		};
 
 		designer.LoadBlueprint (blueprint);
@@ -136,7 +136,7 @@ public class BlueprintDesignerTests {
 	[Test]
 	public void ShiftBeat_ShiftByPositiveOne_EmittedBeatIndexRisesByBeatValue () {
 		designer.LoadBlueprint (blueprint);
-		designer.OnShiftBeat += (index) => Assert.That (index == (int)BlueprintDesigner.BeatValue.Quarter);
+		designer.OnShiftBeat += (index) => Assert.That (index == (int)DesignMenuController.BeatValue.Quarter);
 
 		designer.ShiftBeat (1);
 	}
@@ -161,15 +161,15 @@ public class BlueprintDesignerTests {
 	[Test]
 	public void ShiftBeat_ShiftAboveLastIndex_EmittedBeatIndexEqualsLastBeatInMeasure () {
 		designer.LoadBlueprint (blueprint);
-		designer.OnShiftBeat += (index) => Assert.That (index == 3 * (int)BlueprintDesigner.BeatValue.Quarter);
+		designer.OnShiftBeat += (index) => Assert.That (index == 3 * (int)DesignMenuController.BeatValue.Quarter);
 
-		designer.ShiftBeat ((int)BlueprintDesigner.BeatValue.Quarter * 10);
+		designer.ShiftBeat ((int)DesignMenuController.BeatValue.Quarter * 10);
 	}
 
 	[Test]
 	public void ShiftBeatValue_ShiftByPositiveOne_EmittedBeatValueGetsLargerByOne () {
 		designer.LoadBlueprint (blueprint);
-		designer.OnShiftBeatValue += (value) => Assert.That (value == BlueprintDesigner.BeatValue.Third);
+		designer.OnShiftBeatValue += (value) => Assert.That (value == DesignMenuController.BeatValue.Third);
 
 		designer.ShiftBeatValue (1);
 	}
@@ -177,7 +177,7 @@ public class BlueprintDesignerTests {
 	[Test]
 	public void ShiftBeatValue_ShiftByNegativeOne_EmittedBeatValueGetsSmallerByOne () {
 		designer.LoadBlueprint (blueprint);
-		designer.OnShiftBeatValue += (value) => Assert.That (value == BlueprintDesigner.BeatValue.Sixth);
+		designer.OnShiftBeatValue += (value) => Assert.That (value == DesignMenuController.BeatValue.Sixth);
 
 		designer.ShiftBeatValue (-1);
 	}
@@ -185,8 +185,8 @@ public class BlueprintDesignerTests {
 	[Test]
 	public void ShiftBeatValue_ShiftBelowIndexZero_EmittedBeatValueIsSixtyfourth () {
 		designer.LoadBlueprint (blueprint);
-		designer.OnShiftBeatValue += (value) => Assert.That (value == BlueprintDesigner.BeatValue.Sixtyfourth);
-		int someNegativeShiftLargerThanNumberOfBeatValues = (System.Enum.GetNames(typeof(BlueprintDesigner.BeatValue)).Length + 10) * -1;
+		designer.OnShiftBeatValue += (value) => Assert.That (value == DesignMenuController.BeatValue.Sixtyfourth);
+		int someNegativeShiftLargerThanNumberOfBeatValues = (System.Enum.GetNames(typeof(DesignMenuController.BeatValue)).Length + 10) * -1;
 
 		designer.ShiftBeatValue (someNegativeShiftLargerThanNumberOfBeatValues);
 	}
@@ -194,8 +194,8 @@ public class BlueprintDesignerTests {
 	[Test]
 	public void ShiftBeatValue_ShiftAboveLastIndex_EmittedBeatValueIsThird () {
 		designer.LoadBlueprint (blueprint);
-		designer.OnShiftBeatValue += (value) => Assert.That (value == BlueprintDesigner.BeatValue.Third);
-		int somePositiveShiftLargerThanNumberOfBeatValues = System.Enum.GetNames(typeof(BlueprintDesigner.BeatValue)).Length + 10;
+		designer.OnShiftBeatValue += (value) => Assert.That (value == DesignMenuController.BeatValue.Third);
+		int somePositiveShiftLargerThanNumberOfBeatValues = System.Enum.GetNames(typeof(DesignMenuController.BeatValue)).Length + 10;
 
 		designer.ShiftBeatValue (somePositiveShiftLargerThanNumberOfBeatValues);
 	}
@@ -204,7 +204,7 @@ public class BlueprintDesignerTests {
 	public void ShiftBeatValue_ShiftFromQuarterToThirdBeat_BeatIndexSnapsDownwardToThirdBeat () {
 		designer.LoadBlueprint (blueprint);
 		designer.ShiftBeat (2);
-		designer.OnShiftBeat += (index) => Assert.That (index == (int)BlueprintDesigner.BeatValue.Third);
+		designer.OnShiftBeat += (index) => Assert.That (index == (int)DesignMenuController.BeatValue.Third);
 
 		designer.ShiftBeatValue (1);
 	}
