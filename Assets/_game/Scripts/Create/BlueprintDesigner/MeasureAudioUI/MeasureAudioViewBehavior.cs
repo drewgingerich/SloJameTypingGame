@@ -23,7 +23,7 @@ public class MeasureAudioViewBehavior : MonoBehaviour {
 		controller.OnStartAudioSection += PlayAudio;
 		controller.OnEndSection += StopAudio;
 
-		StartCoroutine (LoadClip (SongImportManager.storagePath + songTitle + ".wav"));
+		StartCoroutine (LoadClip (SongDataManager.storagePath + songTitle + ".wav"));
 	}
 
 	IEnumerator LoadClip (string path) {

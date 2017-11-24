@@ -11,15 +11,14 @@ public class CreatorViewBehavior : MonoBehaviour {
 	GameObject currentMenuObject;
 
 	void Start () {
-		SongImportManager.EnsureStorageDirectoryExists ();
 		Wire ();
 		musicSelector.gameObject.SetActive (true);
 		currentMenuObject = musicSelector.gameObject;
 	}
 
 	void Wire () {
-		musicSelector.OnSelectSong += LoadBlueprintBuilder;
-		musicSelector.OnSelectImport += LoadMusicImporter;
+		musicSelector.OnSelect += LoadBlueprintBuilder;
+		musicSelector.OnBack += LoadMusicImporter;
 		musicImporter.OnBack += LoadMusicSelector;
 		blueprintDesigner.OnBack += LoadMusicSelector;
 	}
@@ -36,10 +35,10 @@ public class CreatorViewBehavior : MonoBehaviour {
 		musicImporter.gameObject.SetActive (true);
 	}
 
-	void LoadBlueprintBuilder (string songTitle) {
+	void LoadBlueprintBuilder (SongData songData) {
 		currentMenuObject.SetActive (false);
 		currentMenuObject = blueprintDesigner.gameObject;
 		blueprintDesigner.gameObject.SetActive (true);
-		blueprintDesigner.Wire (songTitle);
+		blueprintDesigner.Wire (songData);
 	}
 }

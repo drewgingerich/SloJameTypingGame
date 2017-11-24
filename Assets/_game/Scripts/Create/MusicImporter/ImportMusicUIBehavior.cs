@@ -26,7 +26,7 @@ public class ImportMusicUIBehavior : MonoBehaviour {
 	void ImportMusicFile (string filePath) {
 		bool importSuccess;
 		try {
-			SongImportManager.ImportSong (filePath);
+			//SongImportManager.ImportSong (filePath);
 			importSuccess = true;
 		} catch (System.Exception e) {
 			Debug.LogError (e);

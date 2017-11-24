@@ -15,28 +15,28 @@ public class BlueprintDesignerViewBehavior : MonoBehaviour {
 	BeatMapBlueprint blueprint;
 	BlueprintDesigner designer;
 	MeasureAudioController audioSectioner;
-	SongInfo songInfo;
+	SongData songData;
 
 	public event System.Action OnBack;
 
 	void OnEnable () {
 		backButton.onClick.AddListener ( () => { if (OnBack != null) OnBack (); } );
-		saveButton.onClick.AddListener ( () => SongInfoIO.SaveInfo (songInfo) );
+		saveButton.onClick.AddListener (songData.Save);
 	}
 
-	public void Wire (string trackName) {
-		songInfo = SongInfoIO.LoadInfo (trackName);
-		if (songInfo.blueprints.Count == 0)
-			songInfo.blueprints.Add (new BeatMapBlueprint ());
-		blueprint = songInfo.blueprints[0];
+	public void Wire (SongData songData) {
+		this.songData = songData;
+		if (songData.blueprints.Count == 0)
+			songData.blueprints.Add (new BeatMapBlueprint ());
+		blueprint = songData.blueprints[0];
 
 		designer = new BlueprintDesigner ();
-		audioSectioner = new MeasureAudioController (songInfo.bpm);
+		audioSectioner = new MeasureAudioController (songData.bpm);
 
 		measureView.Wire (designer, audioSectioner);
 		beatInfoView.Wire (designer);
 		measureInfoView.Wire (designer, blueprint);
-		measureAudioView.Wire (designer, audioSectioner, trackName);
+		measureAudioView.Wire (designer, audioSectioner, songData.songTitle);
 
 		designer.LoadBlueprint (blueprint);
 	}

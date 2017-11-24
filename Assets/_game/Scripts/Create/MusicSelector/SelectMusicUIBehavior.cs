@@ -11,17 +11,17 @@ public class SelectMusicUIBehavior : MonoBehaviour {
 
 	List<GameObject> selectionButtonObjects;
 
-	public event System.Action<string> OnSelectSong;
-	public event System.Action OnSelectImport;
+	public event System.Action<SongData> OnSelect;
+	public event System.Action OnBack;
 
 	void Awake () {
 		selectionButtonObjects = new List<GameObject> ();
-		WireUIComponents ();
+		Wire ();
 	}
 
-	void WireUIComponents () {
+	void Wire () {
 		importMusicButton.onClick.AddListener ( () => {
-			if (OnSelectImport != null) OnSelectImport ();
+			if (OnBack != null) OnBack ();
 		});
 	}
 
@@ -31,19 +31,19 @@ public class SelectMusicUIBehavior : MonoBehaviour {
 
 	void RefreshSelection () {
 		ClearSelectionButtons ();
-		string[] songTitles = SongImportManager.GetImportedSongTitles ();
-		foreach (string trackTitle in songTitles)
-			AddSelectionButton (trackTitle);
+		List<SongData> songDataList = SongDataManager.GetSongDataList ();
+		foreach (SongData songData in songDataList)
+			AddSelectionButton (songData);
 	}
 
-	void AddSelectionButton (string songTitle) {
+	void AddSelectionButton (SongData songData) {
 		GameObject selectionButtonObject = Instantiate(selectionButtonPrefab, verticalLayout.transform);
 		selectionButtonObjects.Add (selectionButtonObject);
 		Button selectionButton = selectionButtonObject.GetComponent<Button> ();
 		selectionButton.onClick.AddListener ( () => { 
-			if (OnSelectSong != null) OnSelectSong (songTitle);
+			if (OnSelect != null) OnSelect (songData);
 		});
-		selectionButton.GetComponentInChildren<Text> ().text = songTitle; 
+		selectionButton.GetComponentInChildren<Text> ().text = songData.songTitle; 
 	}
 
 	void ClearSelectionButtons () {

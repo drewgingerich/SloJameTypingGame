@@ -10,7 +10,7 @@ public class BeatMap  {
 		BeatTimes = beatTimes;
 	}
 
-	public BeatMap (SongInfo songInfo, int beatMapIndex) {
+	public BeatMap (SongData songInfo, int beatMapIndex) {
 		float quarterNoteTime = 60 / songInfo.bpm;
 		float indexTime = quarterNoteTime / 48;
 		int indexSinceLastBeat = 0;
