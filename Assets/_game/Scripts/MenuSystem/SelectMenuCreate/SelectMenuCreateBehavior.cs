@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectMusicUIBehavior : MonoBehaviour {
+public class SelectMenuCreateBehavior : MonoBehaviour {
 
 	[SerializeField] Button importMusicButton;
 	[SerializeField] GameObject verticalLayout;

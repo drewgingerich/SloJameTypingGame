@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MenuSystemBehavior : MonoBehaviour {
 
-	[SerializeField] SelectMusicUIBehavior musicSelector;
+	[SerializeField] SelectMenuCreateBehavior musicSelector;
 	[SerializeField] ImportMenuBehavior musicImporter;
 	[SerializeField] DesignMenuBehavior blueprintDesigner;
 
