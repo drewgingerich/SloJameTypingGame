@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MenuSystemBehavior : MonoBehaviour {
 
-	[SerializeField] SelectMenuCreateBehavior musicSelector;
+	[SerializeField] MainMenuBehavior mainMenu;
+	[SerializeField] PlaySelectMenuBehavior selectPlayMenu;
+	[SerializeField] CreateSelectMenuBehavior selectCreateMenu;
 	[SerializeField] ImportMenuBehavior musicImporter;
 	[SerializeField] DesignMenuBehavior blueprintDesigner;
 
@@ -12,21 +14,37 @@ public class MenuSystemBehavior : MonoBehaviour {
 
 	void Start () {
 		Wire ();
-		musicSelector.gameObject.SetActive (true);
-		currentMenuObject = musicSelector.gameObject;
+		// selectCreateMenu.gameObject.SetActive (true);
+		// currentMenuObject = selectCreateMenu.gameObject;
 	}
 
 	void Wire () {
-		musicSelector.OnSelect += LoadBlueprintBuilder;
-		musicSelector.OnBack += LoadMusicImporter;
+		mainMenu.OnChoosePlay += LoadSelectPlayMenu;
+		mainMenu.OnChooseCreate += LoadSelectCreateMenu;
+		mainMenu.OnChooseQuit += QuitGame;
+		selectPlayMenu.OnBack += LoadMainMenu;
+		selectCreateMenu.OnSelect += LoadBlueprintBuilder;
+		selectCreateMenu.OnBack += LoadMusicImporter;
 		musicImporter.OnBack += LoadMusicSelector;
 		blueprintDesigner.OnBack += LoadMusicSelector;
 	}
 
+	void LoadMainMenu () {
+
+	}
+
+	void LoadSelectPlayMenu () {
+
+	}
+
+	void LoadSelectCreateMenu () {
+
+	}
+
 	void LoadMusicSelector () {
 		currentMenuObject.SetActive (false);
-		currentMenuObject = musicSelector.gameObject;
-		musicSelector.gameObject.SetActive (true);
+		currentMenuObject = selectCreateMenu.gameObject;
+		selectCreateMenu.gameObject.SetActive (true);
 	}
 
 	void LoadMusicImporter () {
@@ -40,5 +58,10 @@ public class MenuSystemBehavior : MonoBehaviour {
 		currentMenuObject = blueprintDesigner.gameObject;
 		blueprintDesigner.gameObject.SetActive (true);
 		blueprintDesigner.Wire (songData);
+	}
+
+	void QuitGame () {
+		Debug.Log ("Quit");
+		//Application.Quit ();
 	}
 }

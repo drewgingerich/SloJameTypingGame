@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SongSelectorViewBehavior : MonoBehaviour {
+public class PlaySelectMenuBehavior : MonoBehaviour {
 
+	public event System.Action OnBack;
 	public event System.Action<SongData> OnChooseSong;
 
 	[SerializeField] GameObject verticalDisplay;
