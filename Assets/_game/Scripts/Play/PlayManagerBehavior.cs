@@ -32,7 +32,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 		ScoringChecker scoringChecker = new ScoringChecker (textManager);
 		scoreKeeper = new ScoreKeeper (activityMonitor, scoringChecker);
-		TextIncrementManager textIncManager = new TextIncrementManager (activityMonitor, scoringChecker, textManager);
+		new TextIncrementManager (activityMonitor, scoringChecker, textManager);
 
 		playLoopManager = new PlayLoopManager (mapReader, beatManager, activityMonitor, scoringChecker);
 		SessionEndMonitor endMonitor = new SessionEndMonitor (audioPlayer, mapReader, spawner, textManager);

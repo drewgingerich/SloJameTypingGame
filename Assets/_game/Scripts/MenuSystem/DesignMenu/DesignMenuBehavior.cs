@@ -12,7 +12,7 @@ public class DesignMenuBehavior : MonoBehaviour {
 	[SerializeField] MeasureInfoViewBehavior measureInfoView;
 	[SerializeField] MeasureAudioBehavior measureAudioView;
 
-	BeatMapBlueprint blueprint;
+	BeatmapBlueprint blueprint;
 	DesignMenuController designer;
 	MeasureAudioController audioSectioner;
 	SongData songData;
@@ -27,7 +27,7 @@ public class DesignMenuBehavior : MonoBehaviour {
 	public void Wire (SongData songData) {
 		this.songData = songData;
 		if (songData.blueprints.Count == 0)
-			songData.blueprints.Add (new BeatMapBlueprint ());
+			songData.blueprints.Add (new BeatmapBlueprint ());
 		blueprint = songData.blueprints[0];
 
 		designer = new DesignMenuController ();

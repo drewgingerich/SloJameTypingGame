@@ -6,12 +6,12 @@ using System.Collections;
 
 public class BlueprintDesignerTests {
 
-	BeatMapBlueprint blueprint;
+	BeatmapBlueprint blueprint;
 	DesignMenuController designer;
 
 	[SetUp]
 	public void SetUp () {
-		blueprint = new BeatMapBlueprint ();
+		blueprint = new BeatmapBlueprint ();
 		designer = new DesignMenuController ();
 	}
 

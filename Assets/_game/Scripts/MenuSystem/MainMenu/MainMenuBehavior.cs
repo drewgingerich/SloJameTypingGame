@@ -13,6 +13,15 @@ public class MainMenuBehavior : MonoBehaviour {
 	[SerializeField] MainMenuButtonBehavior createButton;
 	[SerializeField] MainMenuButtonBehavior quitButton;
 
+	public void Load () {
+		gameObject.SetActive (true);
+		playButton.gameObject.GetComponent<Button> ().Select ();
+	}
+
+	public void Unload () {
+		gameObject.SetActive (false);
+	}
+
 	void Start () {
 		playButton.OnChoose += () => {
 			if (OnChoosePlay != null) OnChoosePlay ();
@@ -23,6 +32,5 @@ public class MainMenuBehavior : MonoBehaviour {
 		quitButton.OnChoose += () => {
 			if (OnChooseQuit != null) OnChooseQuit ();
 		};
-		playButton.gameObject.GetComponent<Button> ().Select ();
 	}
 }

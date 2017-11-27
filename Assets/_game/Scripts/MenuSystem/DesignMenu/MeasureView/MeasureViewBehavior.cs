@@ -24,7 +24,7 @@ public class MeasureViewBehavior : MonoBehaviour {
 	}
 
 	void Awake () {
-		activityMarkers = new List<GameObject> (new GameObject[BeatMapBlueprint.measureDivisor]);
+		activityMarkers = new List<GameObject> (new GameObject[BeatmapBlueprint.measureDivisor]);
 	}
 
 	void Update () {

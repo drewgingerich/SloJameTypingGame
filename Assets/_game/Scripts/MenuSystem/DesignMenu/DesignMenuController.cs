@@ -19,7 +19,7 @@ public class DesignMenuController {
 	}
 
 	BeatValue beatValue;
-	BeatMapBlueprint blueprint;
+	BeatmapBlueprint blueprint;
 	int measureIndex;
 	bool[] measure;
 	int beatIndex;
@@ -35,7 +35,7 @@ public class DesignMenuController {
 		beatValue = BeatValue.Quarter;
 	}
 
-	public void LoadBlueprint (BeatMapBlueprint blueprint) {
+	public void LoadBlueprint (BeatmapBlueprint blueprint) {
 		this.blueprint = blueprint;
 		ShiftMeasure (0);
 		ShiftBeatValue (0);

@@ -19,7 +19,7 @@ public class BeatInfoViewBehavior : MonoBehaviour {
 	}
 
 	void UpdateBeatIndex (int index) {
-		int beatValueMeasureFraction = BeatMapBlueprint.measureDivisor / (int)beatValue;
+		int beatValueMeasureFraction = BeatmapBlueprint.measureDivisor / (int)beatValue;
 		int beatNumber = 1 + index / (int)beatValue;
 		beatInfoText.text = string.Format ("{0}/{1}", beatNumber.ToString (), beatValueMeasureFraction.ToString ());
 	}

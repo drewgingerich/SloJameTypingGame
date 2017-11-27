@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CreateSelectMenuBehavior : MonoBehaviour {
 
-	public event System.Action<SongData> OnSelect;
+	public event System.Action<SongData> OnChooseSong;
 	public event System.Action OnBack;
 
 	// [SerializeField] Button importMusicButton;
@@ -13,6 +13,14 @@ public class CreateSelectMenuBehavior : MonoBehaviour {
 	// [SerializeField] GameObject selectionButtonPrefab;
 
 	// List<GameObject> selectionButtonObjects;
+
+	public void Load () {
+		gameObject.SetActive (true);
+	}
+
+	public void Unload () {
+		gameObject.SetActive (false);
+	}
 
 	// void Awake () {
 	// 	selectionButtonObjects = new List<GameObject> ();

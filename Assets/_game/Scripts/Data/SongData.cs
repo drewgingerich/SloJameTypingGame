@@ -15,16 +15,16 @@ public class SongData {
 	public float bpm;
 	public float beatTimingOffset;
 	public float duration;
-	public List<BeatMapBlueprint> blueprints;
+	public List<BeatmapBlueprint> blueprints;
 
 	public SongData () {
-		blueprints = new List<BeatMapBlueprint> ();
+		blueprints = new List<BeatmapBlueprint> ();
 	}
 
 	public SongData (string directoryPath, string songTitle) {
 		this.directoryPath = directoryPath;
 		this.songTitle = songTitle;
-		blueprints = new List<BeatMapBlueprint> ();
+		blueprints = new List<BeatmapBlueprint> ();
 	}
 
 	public void Save () {
@@ -38,7 +38,7 @@ public class SongData {
 	}
 
 	public static SongData Load (string songDirectoyPath) {
-		string songTitle = Path.GetDirectoryName (songDirectoyPath);
+		string songTitle = Path.GetFileName (songDirectoyPath);
 		string songDataPath = Path.Combine (songDirectoyPath, songTitle + ".xml");
 		if (!File.Exists (songDataPath))
 			return new SongData (songDirectoyPath, songTitle);
