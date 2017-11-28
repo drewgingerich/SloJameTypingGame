@@ -7,15 +7,15 @@ public class MenuSystemBehavior : MonoBehaviour {
 	public event System.Action<SongData, List<float>> OnStartPlay;
 
 	[SerializeField] MainMenuBehavior mainMenu;
-	[SerializeField] PlaySelectMenuBehavior playSelectMenu;
+	[SerializeField] SongSelectMenuBehavior playSelectMenu;
 	[SerializeField] BeatmapSelectMenuBehavior beatmapSelectMenu;
-	[SerializeField] CreateSelectMenuBehavior createSelectMenu;
+	[SerializeField] SongSelectMenuBehavior createSelectMenu;
 	[SerializeField] ImportMenuBehavior importMenu;
 	[SerializeField] DesignMenuBehavior designMenu;
 
 	void Start () {
 		Wire ();
-		playSelectMenu.Load ();
+		mainMenu.Load ();
 	}
 
 	void Wire () {
@@ -47,6 +47,14 @@ public class MenuSystemBehavior : MonoBehaviour {
 			Debug.Log ("OnStartPlay");
 			if (OnStartPlay != null)
 				OnStartPlay (songData, beatmap);
+		};
+		createSelectMenu.OnBack += () => {
+			createSelectMenu.Unload ();
+			mainMenu.Load ();
+		};
+		createSelectMenu.OnChooseSong += (songData) => {
+			createSelectMenu.Unload ();
+			// designMenu.Load (songData);
 		};
 	}
 }

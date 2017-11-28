@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlaySelectMenuBehavior : MonoBehaviour {
+public class SongSelectMenuBehavior : MonoBehaviour {
 
 	public event System.Action OnBack;
 	public event System.Action<SongData> OnChooseSong;
