@@ -13,7 +13,7 @@ public class GameManagerBehavior : MonoBehaviour {
 		menuSystem.OnStartPlay += StartPlay;
 	}
 
-	void StartPlay (SongData songData, List<float> beatmap) {
+	void StartPlay (SongData songData, BeatmapBlueprint blueprint) {
 		SceneManager.UnloadScene ("MenuSystem");
 		SceneManager.LoadScene ("Play", LoadSceneMode.Additive);
 		

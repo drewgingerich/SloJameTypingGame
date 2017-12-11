@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class DesignMenuBehavior : MonoBehaviour {
 
+	public event System.Action OnBack;
+
 	[SerializeField] Button backButton;
 	[SerializeField] Button saveButton;
 	[SerializeField] MeasureViewBehavior measureView;
@@ -17,27 +19,28 @@ public class DesignMenuBehavior : MonoBehaviour {
 	MeasureAudioController audioSectioner;
 	SongData songData;
 
-	public event System.Action OnBack;
-
-	void OnEnable () {
+	void Awake () {
+		designer = new DesignMenuController ();
 		backButton.onClick.AddListener ( () => { if (OnBack != null) OnBack (); } );
-		saveButton.onClick.AddListener (songData.Save);
+		// saveButton.onClick.AddListener (songData.Save);
 	}
 
-	public void Wire (SongData songData) {
-		this.songData = songData;
-		if (songData.blueprints.Count == 0)
-			songData.blueprints.Add (new BeatmapBlueprint ());
-		blueprint = songData.blueprints[0];
+	public void Load (SongData songData, BeatmapBlueprint blueprint) {
+		gameObject.SetActive (true);
 
-		designer = new DesignMenuController ();
+		this.songData = songData;
+		
 		audioSectioner = new MeasureAudioController (songData.bpm);
 
-		measureView.Wire (designer, audioSectioner);
-		beatInfoView.Wire (designer);
-		measureInfoView.Wire (designer, blueprint);
-		measureAudioView.Wire (designer, audioSectioner, songData.songTitle);
+		measureView.Load (designer, audioSectioner);
+		beatInfoView.Load (designer);
+		measureInfoView.Load (designer, blueprint);
+		measureAudioView.Load (designer, audioSectioner, songData.songTitle);
 
 		designer.LoadBlueprint (blueprint);
+	}
+
+	public void Unload () {
+		gameObject.SetActive (false);
 	}
 }

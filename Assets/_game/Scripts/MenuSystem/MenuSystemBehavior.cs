@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class MenuSystemBehavior : MonoBehaviour {
 
-	public event System.Action<SongData, List<float>> OnStartPlay;
+	public event System.Action<SongData, BeatmapBlueprint> OnStartPlay;
 
 	[SerializeField] MainMenuBehavior mainMenu;
 	[SerializeField] SongSelectMenuBehavior playSelectMenu;
-	[SerializeField] BeatmapSelectMenuBehavior beatmapSelectMenu;
+	[SerializeField] BeatmapSelectMenuBehavior playBeatmapSelectMenu;
 	[SerializeField] SongSelectMenuBehavior createSelectMenu;
+	[SerializeField] BeatmapSelectMenuBehavior createBeatmapSelectMenu;
 	[SerializeField] ImportMenuBehavior importMenu;
 	[SerializeField] DesignMenuBehavior designMenu;
 
@@ -36,14 +37,14 @@ public class MenuSystemBehavior : MonoBehaviour {
 		};
 		playSelectMenu.OnChooseSong += (songData) => {
 			playSelectMenu.Unload ();
-			beatmapSelectMenu.Load (songData);
+			playBeatmapSelectMenu.Load (songData);
 		};
-		beatmapSelectMenu.OnBack += () => {
-			beatmapSelectMenu.Unload ();
+		playBeatmapSelectMenu.OnBack += () => {
+			playBeatmapSelectMenu.Unload ();
 			playSelectMenu.Load ();
 		};
-		beatmapSelectMenu.OnChooseBeatmap += (songData, beatmap) => {
-			beatmapSelectMenu.Unload ();
+		playBeatmapSelectMenu.OnChooseBlueprint += (songData, beatmap) => {
+			playBeatmapSelectMenu.Unload ();
 			Debug.Log ("OnStartPlay");
 			if (OnStartPlay != null)
 				OnStartPlay (songData, beatmap);
@@ -54,7 +55,15 @@ public class MenuSystemBehavior : MonoBehaviour {
 		};
 		createSelectMenu.OnChooseSong += (songData) => {
 			createSelectMenu.Unload ();
-			// designMenu.Load (songData);
+			createBeatmapSelectMenu.Load (songData);
+		};
+		createBeatmapSelectMenu.OnBack += () => {
+			createBeatmapSelectMenu.Unload ();
+			playSelectMenu.Load ();
+		};
+		createBeatmapSelectMenu.OnChooseBlueprint += (songData, beatmap) => {
+			createBeatmapSelectMenu.Unload ();
+			designMenu.Load (songData, beatmap);
 		};
 	}
 }

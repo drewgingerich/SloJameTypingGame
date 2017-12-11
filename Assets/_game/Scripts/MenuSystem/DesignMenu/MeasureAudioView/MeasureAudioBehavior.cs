@@ -10,7 +10,7 @@ public class MeasureAudioBehavior : MonoBehaviour {
 	[SerializeField] Button stopButton;
 	[SerializeField] Text timeText;
 
-	public void Wire (DesignMenuController designer, MeasureAudioController controller, string songTitle) {
+	public void Load (DesignMenuController designer, MeasureAudioController controller, string songTitle) {
 		playButton.interactable = false;
 		stopButton.interactable = false;
 

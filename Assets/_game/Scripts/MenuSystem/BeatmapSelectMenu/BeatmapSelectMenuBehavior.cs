@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class BeatmapSelectMenuBehavior : MonoBehaviour {
 
 	public event System.Action OnBack;
-	public event System.Action<SongData, List<float>> OnChooseBeatmap;
+	public event System.Action<SongData, BeatmapBlueprint> OnChooseBlueprint;
 
 	[SerializeField] Button backButton;
+	[SerializeField] Button addBlueprintButton;
 	[SerializeField] GameObject verticalDisplay;
 	[SerializeField] GameObject beatmapItemPrefab;
 
@@ -30,7 +31,7 @@ public class BeatmapSelectMenuBehavior : MonoBehaviour {
 	public void Unload () {
 		gameObject.SetActive (false);
 		foreach (BeatmapItemBehavior beatmapItem in beatmapItems) {
-			beatmapItem.OnChooseBlueprint -= ChooseBeatmap;
+			beatmapItem.OnChooseBlueprint -= ChooseBlueprint;
 			Destroy (beatmapItem.gameObject);
 		}
 	}
@@ -39,6 +40,9 @@ public class BeatmapSelectMenuBehavior : MonoBehaviour {
 		backButton.onClick.AddListener ( () => {
 			if (OnBack != null) OnBack ();
 		});
+		if (addBlueprintButton != null) {
+			addBlueprintButton.onClick.AddListener (AddBlueprint);
+		}
 	}
 
 	void AddBeatmapItem (BeatmapBlueprint blueprint) {
@@ -46,14 +50,18 @@ public class BeatmapSelectMenuBehavior : MonoBehaviour {
 		newBeatmapItem.transform.SetParent (verticalDisplay.transform);
 		BeatmapItemBehavior itemBehavior = newBeatmapItem.GetComponent<BeatmapItemBehavior> ();
 		itemBehavior.Load (blueprint);
-		itemBehavior.OnChooseBlueprint += ChooseBeatmap;
+		itemBehavior.OnChooseBlueprint += ChooseBlueprint;
 		beatmapItems.Add (itemBehavior);
 	}
 
-	void ChooseBeatmap (BeatmapBlueprint blueprint) {
-		if (OnChooseBeatmap != null) {
-			List<float> beatTimings = blueprint.Translate (songData);
-			OnChooseBeatmap (songData, beatTimings);
-		}
+	void AddBlueprint () {
+		BeatmapBlueprint newBlueprint = new BeatmapBlueprint ();
+		songData.blueprints.Add (newBlueprint);
+		AddBeatmapItem (newBlueprint);
+	}
+
+	void ChooseBlueprint (BeatmapBlueprint blueprint) {
+		if (OnChooseBlueprint != null)
+			OnChooseBlueprint (songData, blueprint);
 	}
 }

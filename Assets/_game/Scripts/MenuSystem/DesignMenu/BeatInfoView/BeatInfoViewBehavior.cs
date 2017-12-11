@@ -9,7 +9,7 @@ public class BeatInfoViewBehavior : MonoBehaviour {
 
 	DesignMenuController.BeatValue beatValue;
 
-	public void Wire (DesignMenuController designer) {
+	public void Load (DesignMenuController designer) {
 		designer.OnShiftBeatValue += UpdateBeatValue;
 		designer.OnShiftBeat += UpdateBeatIndex;
 	}

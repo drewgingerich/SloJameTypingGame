@@ -14,7 +14,7 @@ public class MeasureViewBehavior : MonoBehaviour {
 
 	List<GameObject> activityMarkers;
 
-	public void Wire (DesignMenuController designer, MeasureAudioController audioController) {
+	public void Load (DesignMenuController designer, MeasureAudioController audioController) {
 		this.designer = designer;
 		designer.OnShiftBeat += UpdateCurrentBeat;
 		designer.OnToggleBeatActivity += UpdateBeatActivity;
