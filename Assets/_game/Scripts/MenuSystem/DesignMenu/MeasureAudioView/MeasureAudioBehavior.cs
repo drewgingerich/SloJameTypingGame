@@ -10,7 +10,7 @@ public class MeasureAudioBehavior : MonoBehaviour {
 	[SerializeField] Button stopButton;
 	[SerializeField] Text timeText;
 
-	public void Load (DesignMenuController designer, MeasureAudioController controller, string songTitle) {
+	public void Load (DesignMenuController designer, MeasureAudioController controller, SongData songData) {
 		playButton.interactable = false;
 		stopButton.interactable = false;
 
@@ -23,7 +23,7 @@ public class MeasureAudioBehavior : MonoBehaviour {
 		controller.OnStartAudioSection += PlayAudio;
 		controller.OnEndSection += StopAudio;
 
-		StartCoroutine (LoadClip (SongDataManager.storagePath + songTitle + ".wav"));
+		StartCoroutine (LoadClip (songData.directoryPath + "/" + songData.songTitle + ".wav"));
 	}
 
 	IEnumerator LoadClip (string path) {

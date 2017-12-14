@@ -45,9 +45,7 @@ public class MenuSystemBehavior : MonoBehaviour {
 		};
 		playBeatmapSelectMenu.OnChooseBlueprint += (songData, beatmap) => {
 			playBeatmapSelectMenu.Unload ();
-			Debug.Log ("OnStartPlay");
-			if (OnStartPlay != null)
-				OnStartPlay (songData, beatmap);
+			GameManagerBehavior.instance.StartPlay ();
 		};
 		createSelectMenu.OnBack += () => {
 			createSelectMenu.Unload ();

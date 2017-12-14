@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class SongSelectMenuBehavior : MonoBehaviour {
 
-	public event System.Action OnBack;
-	public event System.Action<SongData> OnChooseSong;
+	public event System.Action OnBack = delegate {};
+	public event System.Action<SongData> OnChooseSong = delegate {};
 
 	[SerializeField] Button backButton;
 	[SerializeField] GameObject verticalDisplay;
@@ -47,7 +47,12 @@ public class SongSelectMenuBehavior : MonoBehaviour {
 		newSongItem.transform.SetParent (verticalDisplay.transform);
 		SongItemButtonBehavior itemBehavior = newSongItem.GetComponent<SongItemButtonBehavior> ();
 		itemBehavior.Load (songData);
-		itemBehavior.OnChoose += OnChooseSong;
+		itemBehavior.OnChoose += ChooseSong;
 		songItems.Add (itemBehavior);
+	}
+
+	void ChooseSong (SongData chosenSong) {
+		DataNavigator.currentSong = chosenSong;
+		OnChooseSong (chosenSong);
 	}
 }

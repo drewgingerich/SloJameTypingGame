@@ -8,35 +8,32 @@ public class MeasureAudioController {
 	float startTime;
 	float endTime;
 
-	public event System.Action<float, float> OnFindSectionBounds;
-	public event System.Action<float> OnUpdateSectionProgress;
-	public event System.Action<float, float> OnStartAudioSection;
-	public event System.Action OnEndSection;
+	public event System.Action<float, float> OnFindSectionBounds = delegate {};
+	public event System.Action<float> OnUpdateSectionProgress = delegate {};
+	public event System.Action<float, float> OnStartAudioSection = delegate {};
+	public event System.Action OnEndSection = delegate {};
 
 	public MeasureAudioController (float songBPM) {
 		measureDuration = 4 * 60 / songBPM;
 	}
 
 	public void FindSectionBounds (int measureIndex) {
-		if (OnEndSection != null)
-			OnEndSection ();
+		OnEndSection ();
 		startTime = measureDuration * (measureIndex - 0.25f);
 		endTime = measureDuration * (measureIndex + 1.25f);
-		if (OnFindSectionBounds != null)
-			OnFindSectionBounds (startTime, endTime);
+		OnFindSectionBounds (startTime, endTime);
 	}
 
 	public void MonitorSectionProgress (float playheadPosition) {
-		if (playheadPosition >= endTime && OnEndSection != null) {
+		if (playheadPosition >= endTime) {
 			OnEndSection ();
-		} else if (OnUpdateSectionProgress != null) {
+		} else {
 			float progressRatio = (playheadPosition - startTime) / (endTime - startTime);
 			OnUpdateSectionProgress (progressRatio);
 		}
 	}
 
 	public void StartAudio () {
-		if (OnStartAudioSection != null)
-			OnStartAudioSection (startTime, endTime);
+		OnStartAudioSection (startTime, endTime);
 	}
 }

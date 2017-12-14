@@ -11,17 +11,16 @@ public class BeatMap  {
 	}
 
 	public BeatMap (SongData songInfo, int beatMapIndex) {
+		BeatmapBlueprint blueprint = songInfo.blueprints[beatMapIndex];
+		BeatTimes = new List<float> ();
 		float quarterNoteTime = 60 / songInfo.bpm;
 		float indexTime = quarterNoteTime / 48;
-		int indexSinceLastBeat = 0;
-		foreach (bool[] measureMap in songInfo.blueprints [beatMapIndex].measures)
+		int beatIndex = 0;
+		foreach (bool[] measureMap in blueprint.measures)
 			foreach (bool flag in measureMap) {
-				if (flag) {
-					BeatTimes.Add (indexSinceLastBeat * indexTime);
-					indexSinceLastBeat = 0;
-				} else {
-					indexSinceLastBeat++;
-				}
+				if (flag)
+					BeatTimes.Add (beatIndex * indexTime);
+				beatIndex++;
 			}
 	}
 }

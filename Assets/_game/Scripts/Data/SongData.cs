@@ -28,8 +28,8 @@ public class SongData {
 	}
 
 	public void Save () {
-		string tempPath = directoryPath + "~" + songTitle + ".xml~";
-		string finalPath = directoryPath + songTitle + ".xml";
+		string tempPath = directoryPath + "/~" + songTitle + ".xml~";
+		string finalPath = directoryPath + "/" + songTitle + ".xml";
 		XmlSerializer serializer = new XmlSerializer (typeof (SongData));
 		using (FileStream stream = new FileStream (tempPath, FileMode.Create))
 			serializer.Serialize(stream, this);
@@ -40,8 +40,10 @@ public class SongData {
 	public static SongData Load (string songDirectoyPath) {
 		string songTitle = Path.GetFileName (songDirectoyPath);
 		string songDataPath = Path.Combine (songDirectoyPath, songTitle + ".xml");
-		if (!File.Exists (songDataPath))
-			return new SongData (songDirectoyPath, songTitle);
+		if (!File.Exists (songDataPath)) {
+			SongData newSongData = new SongData (songDirectoyPath, songTitle);
+			newSongData.Save ();
+		}
 		XmlSerializer serializer = new XmlSerializer (typeof (SongData));
 		using (FileStream stream = new FileStream (songDataPath, FileMode.Open))
 			return (SongData)serializer.Deserialize (stream);

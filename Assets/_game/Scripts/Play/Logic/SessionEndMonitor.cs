@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SessionEndMonitor {
 
-	public event System.Action OnEndSession;
+	public event System.Action OnEndSession = delegate {};
 
 	bool lastBeatSpawned = false;
 	Beat mostRecentBeat;
@@ -12,8 +12,8 @@ public class SessionEndMonitor {
 	public SessionEndMonitor (AudioSectionPlayerBehavior audioSectionPlayer, BeatMapReader mapReader, 
 		BeatSpawner spawner, TextManager textManager) 
 	{
-		audioSectionPlayer.OnEndSection += EndSession;
-		textManager.OnEndText += EndSession;
+		audioSectionPlayer.OnEndSection += OnEndSession;
+		textManager.OnEndText += OnEndSession;
 		spawner.OnSpawnBeat += RegisterBeat;
 		mapReader.OnFinishMap += () => lastBeatSpawned = true;
 	}
@@ -30,12 +30,9 @@ public class SessionEndMonitor {
 	}
 
 	void CheckIfLastBeat (Beat _) {
-		if (lastBeatSpawned)
+		if (lastBeatSpawned) {
 			EndSession ();
-	}
-
-	void EndSession () {
-		if (OnEndSession != null)
 			OnEndSession ();
+		}
 	}
 }

@@ -5,17 +5,33 @@ using UnityEngine.SceneManagement;
 
 public class GameManagerBehavior : MonoBehaviour {
 
-	MenuSystemBehavior menuSystem;
+	public static GameManagerBehavior instance { get; private set; }
 
-	void Start () {
-		SceneManager.LoadScene ("MenuSystem", LoadSceneMode.Additive);
-		menuSystem = GameObject.FindGameObjectWithTag ("MenuSystem").GetComponent<MenuSystemBehavior> ();
-		menuSystem.OnStartPlay += StartPlay;
+	public event System.Action OnStartSceneTransition = delegate {};
+	public event System.Action OnEndSceneTransition = delegate {};
+
+	void Awake () {
+		if (instance == null)
+			instance = this;
+		else
+			Debug.LogError ("Multiple GameManagerBehavior instances!");
 	}
 
-	void StartPlay (SongData songData, BeatmapBlueprint blueprint) {
-		SceneManager.UnloadScene ("MenuSystem");
-		SceneManager.LoadScene ("Play", LoadSceneMode.Additive);
-		
+	IEnumerator Start () {
+		OnStartSceneTransition ();
+		yield return SceneManager.LoadSceneAsync ("MenuSystem", LoadSceneMode.Additive);
+		OnEndSceneTransition ();
 	}
+
+	public void StartPlay () {
+		StartCoroutine (TransitionToPlay ());
+	}
+
+	IEnumerator TransitionToPlay () {
+		OnStartSceneTransition ();
+		yield return SceneManager.UnloadSceneAsync ("MenuSystem");
+		yield return SceneManager.LoadSceneAsync ("Play", LoadSceneMode.Additive);
+		OnEndSceneTransition ();
+	}
+
 }

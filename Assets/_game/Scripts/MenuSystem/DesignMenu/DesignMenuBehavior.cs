@@ -22,7 +22,7 @@ public class DesignMenuBehavior : MonoBehaviour {
 	void Awake () {
 		designer = new DesignMenuController ();
 		backButton.onClick.AddListener ( () => { if (OnBack != null) OnBack (); } );
-		// saveButton.onClick.AddListener (songData.Save);
+		saveButton.onClick.AddListener (() => songData.Save());
 	}
 
 	public void Load (SongData songData, BeatmapBlueprint blueprint) {
@@ -35,7 +35,7 @@ public class DesignMenuBehavior : MonoBehaviour {
 		measureView.Load (designer, audioSectioner);
 		beatInfoView.Load (designer);
 		measureInfoView.Load (designer, blueprint);
-		measureAudioView.Load (designer, audioSectioner, songData.songTitle);
+		measureAudioView.Load (designer, audioSectioner, songData);
 
 		designer.LoadBlueprint (blueprint);
 	}
