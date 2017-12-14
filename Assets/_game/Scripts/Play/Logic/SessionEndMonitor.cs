@@ -30,9 +30,7 @@ public class SessionEndMonitor {
 	}
 
 	void CheckIfLastBeat (Beat _) {
-		if (lastBeatSpawned) {
-			EndSession ();
+		if (lastBeatSpawned)
 			OnEndSession ();
-		}
 	}
 }
