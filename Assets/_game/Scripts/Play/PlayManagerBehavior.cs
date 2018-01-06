@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayManagerBehavior : MonoBehaviour {
 
+	[SerializeField] [TextArea] string text;
+
 	[SerializeField] AudioSectionPlayerBehavior audioPlayer;
 	[SerializeField] IndicatorSpawnerBehavior indicatorSpawner;
 	[SerializeField] TextViewBehavior textView;
@@ -14,25 +16,33 @@ public class PlayManagerBehavior : MonoBehaviour {
 	PlayLoopManager playLoopManager;
 	ScoreKeeper scoreKeeper;
 
-	public void StartPlay (AudioClip song, BeatMap beatMap, string text) {
-		Wire (beatMap, text);
+	public void Play () {
+		StartCoroutine (InitializePlay ());
+	}
+
+	IEnumerator InitializePlay () {
+		SongData song = DataNavigator.currentSong;
+		WWW www = new WWW ("file://" + song.directoryPath + "/" + song.songTitle + ".wav");
+		yield return www;
+
+		AudioClip clip = www.GetAudioClip ();
+		BeatMap map = new BeatMap (song, DataNavigator.beatmapIndex);
+		Wire (map, text);
 
 		audioPlayer.OnUpdatePosition += PlayLoop;
-		audioPlayer.LoadClip (song);
-		audioPlayer.PlaySection (0, song.length);
+		audioPlayer.LoadClip (clip);
+		audioPlayer.PlaySection (0, clip.length);
 	}
 
 	void Wire (BeatMap beatMap, string text) {
-		BeatMapReader mapReader = new BeatMapReader (beatMap);
-		TextManager textManager = new TextManager ();
-
+		BeatMapReader mapReader = new BeatMapReader (beatMap, text.Length);
 		BeatSpawner spawner = new BeatSpawner (mapReader);
 		BeatTimeManager beatManager = new BeatTimeManager (spawner);
 		BeatActivityMonitor activityMonitor = new BeatActivityMonitor (spawner);
 
+		TextManager textManager = new TextManager (activityMonitor);
 		ScoringChecker scoringChecker = new ScoringChecker (textManager);
 		scoreKeeper = new ScoreKeeper (activityMonitor, scoringChecker);
-		new TextIncrementManager (activityMonitor, scoringChecker, textManager);
 
 		playLoopManager = new PlayLoopManager (mapReader, beatManager, activityMonitor, scoringChecker);
 		SessionEndMonitor endMonitor = new SessionEndMonitor (audioPlayer, mapReader, spawner, textManager);
@@ -44,7 +54,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 		textManager.LoadText (text);
 	}
-	
+
 	void PlayLoop (float audioTime) {
 		List<char> inputString = new List<char> (Input.inputString);
 		playLoopManager.PlayLoop (audioTime, inputString);

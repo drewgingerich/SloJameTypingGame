@@ -6,6 +6,7 @@ public class MenuSystemBehavior : MonoBehaviour {
 
 	public event System.Action<SongData, BeatmapBlueprint> OnStartPlay;
 
+	[SerializeField] GameManagerBehavior gameManager;
 	[SerializeField] MainMenuBehavior mainMenu;
 	[SerializeField] SongSelectMenuBehavior playSelectMenu;
 	[SerializeField] BeatmapSelectMenuBehavior playBeatmapSelectMenu;
@@ -45,7 +46,7 @@ public class MenuSystemBehavior : MonoBehaviour {
 		};
 		playBeatmapSelectMenu.OnChooseBlueprint += (songData, beatmap) => {
 			playBeatmapSelectMenu.Unload ();
-			GameManagerBehavior.instance.StartPlay ();
+			gameManager.LoadPlay ();
 		};
 		createSelectMenu.OnBack += () => {
 			createSelectMenu.Unload ();

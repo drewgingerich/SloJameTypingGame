@@ -4,34 +4,34 @@ using UnityEngine;
 
 public class TextManager {
 
-	public event System.Action<string> OnStartText;
-	public event System.Action OnEndText;
-	public event System.Action<int> OnUpdateTextIndex;
+	public event System.Action<string> OnStartText = delegate {};
+	public event System.Action OnEndText = delegate {};
+	public event System.Action<int> OnUpdateTextIndex = delegate {};
 
 	string text;
-	int textIndex;
+	public int textIndex { get; private set; }
+
+	public TextManager (BeatActivityMonitor beatActivityMonitor) {
+		beatActivityMonitor.OnMissedBeat += (beat) => UpdateTextIndex (beat.textIndex);
+	}
 
 	public void LoadText (string text) {
 		this.text = text;
 		textIndex = 0;
-		if (OnStartText != null)
-			OnStartText (text);
-		if (OnUpdateTextIndex != null)
-			OnUpdateTextIndex (textIndex);
+		OnStartText (text);
+		OnUpdateTextIndex (textIndex);
 	}
 
-	public char GetNextCharacter () {
-		return text[textIndex];
+	public char GetCharacterAtIndex (int index) {
+		return text[index];
 	}
 
-	public void IncrementText () {
-		textIndex++;
+	public void UpdateTextIndex (int newIndex) {
+		textIndex = newIndex;
 		if (textIndex >= text.Length) {
-			if (OnEndText != null)
-				OnEndText ();
+			OnEndText ();
 			return;
 		}
-		if (OnUpdateTextIndex != null)
-			OnUpdateTextIndex (textIndex);
+		OnUpdateTextIndex (textIndex);
 	}
 }

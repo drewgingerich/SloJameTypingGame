@@ -5,33 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class GameManagerBehavior : MonoBehaviour {
 
-	public static GameManagerBehavior instance { get; private set; }
+	[SerializeField] GameObject MenuSystem;
+	[SerializeField] GameObject PlaySystem;
+	[SerializeField] PlayManagerBehavior PlayManager;
 
-	public event System.Action OnStartSceneTransition = delegate {};
-	public event System.Action OnEndSceneTransition = delegate {};
-
-	void Awake () {
-		if (instance == null)
-			instance = this;
-		else
-			Debug.LogError ("Multiple GameManagerBehavior instances!");
+	void Start () {
+		LoadMenu ();
 	}
 
-	IEnumerator Start () {
-		OnStartSceneTransition ();
-		yield return SceneManager.LoadSceneAsync ("MenuSystem", LoadSceneMode.Additive);
-		OnEndSceneTransition ();
+	public void LoadMenu () {
+		PlaySystem.SetActive (false);
+		MenuSystem.SetActive (true);
 	}
 
-	public void StartPlay () {
-		StartCoroutine (TransitionToPlay ());
+	public void LoadPlay () {
+		MenuSystem.SetActive (false);
+		PlaySystem.SetActive (true);
+		PlayManager.Play ();
 	}
-
-	IEnumerator TransitionToPlay () {
-		OnStartSceneTransition ();
-		yield return SceneManager.UnloadSceneAsync ("MenuSystem");
-		yield return SceneManager.LoadSceneAsync ("Play", LoadSceneMode.Additive);
-		OnEndSceneTransition ();
-	}
-
 }

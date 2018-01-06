@@ -10,7 +10,7 @@ public class BeatActivityMonitor {
 	float activeTimeWindowHalfwidth;
 	List<Beat> monitoredBeats;
 
-	public event System.Action<Beat> OnMissedBeat;
+	public event System.Action<Beat> OnMissedBeat = delegate {};
 
 	public BeatActivityMonitor (BeatSpawner spawner) {
 		monitoredBeats = new List<Beat> ();
@@ -30,8 +30,7 @@ public class BeatActivityMonitor {
 		foreach (Beat beat in missedBeats) {
 			beat.Destroy ();
 			// DeregisterBeat (beat);
-			if (OnMissedBeat != null)
-				OnMissedBeat (beat);
+			OnMissedBeat (beat);
 		}
 		return activeBeats;
 	}

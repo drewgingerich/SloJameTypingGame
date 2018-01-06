@@ -10,8 +10,8 @@ public class BeatSpawner {
 		beatMapReader.OnReadBeat += SpawnBeat;
 	}
 
-	void SpawnBeat (float spawnTime, float targetTime) {
-		Beat newBeat = new Beat (spawnTime, targetTime);
+	void SpawnBeat (float spawnTime, float targetTime, int textIndex) {
+		Beat newBeat = new Beat (spawnTime, targetTime, textIndex);
 		OnSpawnBeat (newBeat);
 	}
 }
