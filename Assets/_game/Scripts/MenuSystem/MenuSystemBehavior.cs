@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MenuSystemBehavior : MonoBehaviour {
 
-	public event System.Action<SongData, BeatmapBlueprint> OnStartPlay;
-
 	[SerializeField] GameManagerBehavior gameManager;
 	[SerializeField] MainMenuBehavior mainMenu;
 	[SerializeField] SongSelectMenuBehavior playSelectMenu;

@@ -5,9 +5,8 @@ using UnityEngine;
 public class BeatMapReader {
 
 	int textLength;
-	int textIndex = 0;
 	BeatMap beatMap;
-	int mapIndex;
+	int mapIndex = 0;
 	float beatTime;
 	float readAheadTime = 3f;
 	bool mapFinished;
@@ -18,7 +17,7 @@ public class BeatMapReader {
 	public BeatMapReader (BeatMap beatMap, int textLength) {
 		this.beatMap = beatMap;
 		this.textLength = textLength;
-		LookForNextBeat (0);
+		LookForNextBeat ();
 	}
 
 	public void ReadMapUpToTime (float audioTime) {
@@ -26,19 +25,18 @@ public class BeatMapReader {
 			return;
 		float seekTime = audioTime + readAheadTime;
 		while (seekTime >= beatTime && !mapFinished) {
-			OnReadBeat (beatTime - readAheadTime, beatTime, textIndex);
-			LookForNextBeat (mapIndex + 1);
+			OnReadBeat (beatTime - readAheadTime, beatTime, mapIndex);
+			mapIndex++;
+			LookForNextBeat ();
 		}
 	}
 
-	void LookForNextBeat (int nextIndex) {
-		textIndex++;
-		if (nextIndex >= beatMap.BeatTimes.Count || textIndex >= textLength) {
+	void LookForNextBeat () {
+		if (mapIndex >= beatMap.BeatTimes.Count || mapIndex >= textLength) {
 			mapFinished = true;
 			OnFinishMap ();
 			return;
 		}
-		mapIndex = nextIndex;
 		beatTime = beatMap.BeatTimes [mapIndex];
 	}
 }

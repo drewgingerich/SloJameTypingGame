@@ -15,13 +15,14 @@ public class ScoringChecker {
 	public void CheckForScores (List<Beat> activeBeats, List<char> inputChars) {
 		while (activeBeats.Count > 0) {
 			Beat beat = activeBeats[0];
+			Debug.Log (beat.textIndex);
 			if (beat.textIndex < textManager.textIndex)
 				return;
 			char desiredChar = textManager.GetCharacterAtIndex (beat.textIndex);
 			bool matchFound = FindMatch (desiredChar, inputChars);
 			if (!matchFound)
 				return;
-			textManager.UpdateTextIndex (beat.textIndex);
+			textManager.UpdateTextIndex (beat.textIndex + 1);
 			activeBeats[0].Destroy ();
 			activeBeats.RemoveAt (0);
 			OnScoreBeat ();
@@ -29,7 +30,6 @@ public class ScoringChecker {
 	}
 
 	bool FindMatch (char desiredChar, List<char> inputChars) {
-		Debug.Log (desiredChar);
 		for (int i = 0; i < inputChars.Count; i++) {
 			if (inputChars[i] == desiredChar) {
 				inputChars.RemoveAt (i);

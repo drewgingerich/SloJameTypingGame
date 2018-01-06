@@ -12,7 +12,7 @@ public class TextManager {
 	public int textIndex { get; private set; }
 
 	public TextManager (BeatActivityMonitor beatActivityMonitor) {
-		beatActivityMonitor.OnMissedBeat += (beat) => UpdateTextIndex (beat.textIndex);
+		beatActivityMonitor.OnMissedBeat += (beat) => UpdateTextIndex (beat.textIndex + 1);
 	}
 
 	public void LoadText (string text) {
