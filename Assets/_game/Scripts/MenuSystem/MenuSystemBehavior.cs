@@ -15,6 +15,9 @@ public class MenuSystemBehavior : MonoBehaviour {
 
 	void Start () {
 		Wire ();
+	}
+
+	void OnEnable () {
 		mainMenu.Load ();
 	}
 

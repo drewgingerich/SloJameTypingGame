@@ -5,22 +5,33 @@ using UnityEngine.SceneManagement;
 
 public class GameManagerBehavior : MonoBehaviour {
 
-	[SerializeField] GameObject MenuSystem;
-	[SerializeField] GameObject PlaySystem;
+	[SerializeField] GameObject menuSystem;
+	[SerializeField] GameObject playSystem;
+	[SerializeField] GameObject statsSystem;
 	[SerializeField] PlayManagerBehavior PlayManager;
+	[SerializeField] StatsSystemBehavior statsManager;
 
 	void Start () {
 		LoadMenu ();
 	}
 
 	public void LoadMenu () {
-		PlaySystem.SetActive (false);
-		MenuSystem.SetActive (true);
+		statsSystem.SetActive (false);
+		playSystem.SetActive (false);
+		menuSystem.SetActive (true);
 	}
 
 	public void LoadPlay () {
-		MenuSystem.SetActive (false);
-		PlaySystem.SetActive (true);
+		statsSystem.SetActive (false);
+		menuSystem.SetActive (false);
+		playSystem.SetActive (true);
 		PlayManager.Play ();
+	}
+
+	public void LoadStats (int totalNumberBeats, int beatsHit, float scorePercentage) {
+		menuSystem.SetActive (false);
+		playSystem.SetActive (false);
+		statsSystem.SetActive (true);
+		statsManager.LoadStats (totalNumberBeats, beatsHit, scorePercentage);
 	}
 }

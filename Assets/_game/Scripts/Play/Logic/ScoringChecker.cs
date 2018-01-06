@@ -15,7 +15,6 @@ public class ScoringChecker {
 	public void CheckForScores (List<Beat> activeBeats, List<char> inputChars) {
 		while (activeBeats.Count > 0) {
 			Beat beat = activeBeats[0];
-			Debug.Log (beat.textIndex);
 			if (beat.textIndex < textManager.textIndex)
 				return;
 			char desiredChar = textManager.GetCharacterAtIndex (beat.textIndex);

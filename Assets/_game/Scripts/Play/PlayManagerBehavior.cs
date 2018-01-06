@@ -6,6 +6,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 	[SerializeField] [TextArea] string text;
 
+	[SerializeField] GameManagerBehavior gameManager;
 	[SerializeField] AudioSectionPlayerBehavior audioPlayer;
 	[SerializeField] IndicatorSpawnerBehavior indicatorSpawner;
 	[SerializeField] TextViewBehavior textView;
@@ -61,7 +62,14 @@ public class PlayManagerBehavior : MonoBehaviour {
 	}
 
 	void EndPlay () {
+		StartCoroutine (Cleanup ());
+	}
+
+	IEnumerator Cleanup () {
+		yield return new WaitForSecondsRealtime (1);
 		float scorePercentage = scoreKeeper.GetScorePercentage ();
+		audioPlayer.Stop ();
 		OnEndPlay (scorePercentage);
+		gameManager.LoadStats (scoreKeeper.totalNumberBeats, scoreKeeper.beatsHit, scoreKeeper.GetScorePercentage ());
 	}
 }
