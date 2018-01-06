@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DesignMenuBehavior : MonoBehaviour {
 
-	public event System.Action OnBack;
+	public event System.Action OnBack = delegate {};
 
 	[SerializeField] Button backButton;
 	[SerializeField] Button saveButton;
@@ -21,7 +21,7 @@ public class DesignMenuBehavior : MonoBehaviour {
 
 	void Awake () {
 		designer = new DesignMenuController ();
-		backButton.onClick.AddListener ( () => { if (OnBack != null) OnBack (); } );
+		backButton.onClick.AddListener (() => OnBack());
 		saveButton.onClick.AddListener (() => songData.Save());
 	}
 

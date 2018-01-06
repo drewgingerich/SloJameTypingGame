@@ -12,6 +12,7 @@ public class Beat {
 	
 	float targetTime;
 	float travelTime;
+	char targetChar;
 
 	public Beat (float spawnTime, float targetTime) {
 		this.targetTime = targetTime;

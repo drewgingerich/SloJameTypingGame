@@ -9,7 +9,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 	[SerializeField] TextViewBehavior textView;
 	[SerializeField] HitView hitView;
 
-	public event System.Action<float> OnEndPlay;
+	public event System.Action<float> OnEndPlay = delegate {};
 
 	PlayLoopManager playLoopManager;
 	ScoreKeeper scoreKeeper;
@@ -52,7 +52,6 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 	void EndPlay () {
 		float scorePercentage = scoreKeeper.GetScorePercentage ();
-		if (OnEndPlay != null)
-			OnEndPlay (scorePercentage);
+		OnEndPlay (scorePercentage);
 	}
 }

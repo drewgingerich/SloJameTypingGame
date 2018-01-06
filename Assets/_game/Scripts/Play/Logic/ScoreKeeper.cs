@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScoreKeeper {
 
-	public event System.Action<int> OnUpdateScore;
+	public event System.Action<int> OnUpdateScore = delegate {};
 
 	int beatsScored = 0;
 	int score = 0;
@@ -23,13 +23,11 @@ public class ScoreKeeper {
 	void ScoreSuccess () {
 		beatsScored++;
 		score++;
-		if (OnUpdateScore != null)
-			OnUpdateScore (score);
+		OnUpdateScore (score);
 	}
 
 	void ScoreMiss () {
 		beatsScored++;
-		if (OnUpdateScore != null)
-			OnUpdateScore (score);
+		OnUpdateScore (score);
 	}
 }
