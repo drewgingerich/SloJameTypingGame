@@ -39,13 +39,13 @@ public class MenuSystemBehavior : MonoBehaviour {
 		};
 		playSelectMenu.OnChooseSong += (songData) => {
 			playSelectMenu.Unload ();
-			playBeatmapSelectMenu.Load (songData);
+			playBeatmapSelectMenu.Load ();
 		};
 		playBeatmapSelectMenu.OnBack += () => {
 			playBeatmapSelectMenu.Unload ();
 			playSelectMenu.Load ();
 		};
-		playBeatmapSelectMenu.OnChooseBlueprint += (songData, beatmap) => {
+		playBeatmapSelectMenu.OnChooseBlueprint += () => {
 			playBeatmapSelectMenu.Unload ();
 			gameManager.LoadPlay ();
 		};
@@ -55,15 +55,19 @@ public class MenuSystemBehavior : MonoBehaviour {
 		};
 		createSelectMenu.OnChooseSong += (songData) => {
 			createSelectMenu.Unload ();
-			createBeatmapSelectMenu.Load (songData);
+			createBeatmapSelectMenu.Load ();
 		};
 		createBeatmapSelectMenu.OnBack += () => {
 			createBeatmapSelectMenu.Unload ();
 			playSelectMenu.Load ();
 		};
-		createBeatmapSelectMenu.OnChooseBlueprint += (songData, beatmap) => {
+		createBeatmapSelectMenu.OnChooseBlueprint += () => {
 			createBeatmapSelectMenu.Unload ();
-			designMenu.Load (songData, beatmap);
+			designMenu.Load ();
+		};
+		designMenu.OnBack += () => {
+			designMenu.Unload ();
+			createBeatmapSelectMenu.Load ();
 		};
 	}
 }

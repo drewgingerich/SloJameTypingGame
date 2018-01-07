@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BeatmapSelectMenuBehavior : MonoBehaviour {
 
 	public event System.Action OnBack = delegate {};
-	public event System.Action<SongData, BeatmapBlueprint> OnChooseBlueprint = delegate {};
+	public event System.Action OnChooseBlueprint = delegate {};
 
 	[SerializeField] Button backButton;
 	[SerializeField] Button addBlueprintButton;
@@ -17,8 +17,8 @@ public class BeatmapSelectMenuBehavior : MonoBehaviour {
 	List<BeatmapBlueprint> blueprints;
 	List<BeatmapItemBehavior> beatmapItems;
 
-	public void Load (SongData songData) {
-		this.songData = songData;
+	public void Load () {
+		songData = DataNavigator.currentSong;
 		gameObject.SetActive (true);
 		beatmapItems = new List<BeatmapItemBehavior> ();
 		foreach (BeatmapBlueprint blueprint in songData.blueprints) {
@@ -62,6 +62,6 @@ public class BeatmapSelectMenuBehavior : MonoBehaviour {
 
 	void ChooseBlueprint (BeatmapBlueprint blueprint) {
 		DataNavigator.beatmapIndex = songData.blueprints.IndexOf (blueprint);
-		OnChooseBlueprint (songData, blueprint);
+		OnChooseBlueprint ();
 	}
 }

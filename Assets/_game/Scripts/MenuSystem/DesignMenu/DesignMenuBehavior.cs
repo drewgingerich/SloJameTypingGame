@@ -25,10 +25,11 @@ public class DesignMenuBehavior : MonoBehaviour {
 		saveButton.onClick.AddListener (() => songData.Save());
 	}
 
-	public void Load (SongData songData, BeatmapBlueprint blueprint) {
+	public void Load () {
 		gameObject.SetActive (true);
 
-		this.songData = songData;
+		songData = DataNavigator.currentSong;
+		blueprint = songData.blueprints[DataNavigator.beatmapIndex];
 		
 		audioSectioner = new MeasureAudioController (songData.bpm);
 
