@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IndicatorBehavior : MonoBehaviour {
+public class Indicator : MonoBehaviour {
 
 	Vector3 travelVector;
 	Vector3 spawnPosition;

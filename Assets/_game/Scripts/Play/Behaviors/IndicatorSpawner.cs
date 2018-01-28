@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IndicatorSpawnerBehavior : MonoBehaviour {
+public class IndicatorSpawner : MonoBehaviour {
 
 	[SerializeField] GameObject indicatorPrefab;
 	[SerializeField] Transform indicatorSpawn;
@@ -12,10 +12,10 @@ public class IndicatorSpawnerBehavior : MonoBehaviour {
 		spawner.OnSpawnBeat += SpawnIndicator;
 	}
 
-	void SpawnIndicator (Beat beat) {
+	public void SpawnIndicator (Beat beat) {
 		GameObject newIndicatorObject = Instantiate (indicatorPrefab);
 		newIndicatorObject.transform.parent = gameObject.transform;
-		IndicatorBehavior newIndicatorBehavior = newIndicatorObject.GetComponent<IndicatorBehavior> ();
+		Indicator newIndicatorBehavior = newIndicatorObject.GetComponent<Indicator> ();
 		newIndicatorBehavior.Wire (beat, indicatorSpawn.position, indicatorTarget.position);
 	}
 }
