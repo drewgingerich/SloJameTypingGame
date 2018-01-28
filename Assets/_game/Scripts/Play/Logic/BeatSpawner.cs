@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class BeatSpawner {
 
 	public event System.Action<Beat> OnSpawnBeat = delegate {};

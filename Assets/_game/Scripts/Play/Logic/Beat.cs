@@ -9,11 +9,11 @@ public class Beat {
 	public event System.Action<Beat> OnDestroy = delegate {};
 
 	public float timeToTarget { get; private set; }
-	public int textIndex { get; private set; }
-
 	float targetTime;
 	float travelTime;
-	char targetChar;
+
+	public int textIndex { get; private set; }
+	public char targetChar { get; private set; }
 
 	public Beat (float spawnTime, float targetTime, int textIndex) {
 		this.textIndex = textIndex;
