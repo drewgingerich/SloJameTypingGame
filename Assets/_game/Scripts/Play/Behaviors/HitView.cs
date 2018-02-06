@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class HitView : MonoBehaviour {
 
 	[SerializeField] Text textComp;
+	[SerializeField] new ParticleSystem particleSystem;
 
-	public void Wire (BeatActivityMonitor activityMonitor, ScoringChecker scoringChecker) {
+	public void Wire (BeatActivityMonitor activityMonitor, ScoringChecker scoringChecker, ParticleSystem particleSystem) {
 		activityMonitor.OnMissedBeat += (_) => DisplayMiss ();
 		scoringChecker.OnScoreBeat += DisplayHit;
+		this.particleSystem = particleSystem;
 	}
 
 	void DisplayMiss () {
@@ -19,6 +21,7 @@ public class HitView : MonoBehaviour {
 
 	void DisplayHit () {
 		textComp.text = "HIT!";
+		particleSystem.Play ();
 		StartCoroutine (FadeText ());
 	}
 

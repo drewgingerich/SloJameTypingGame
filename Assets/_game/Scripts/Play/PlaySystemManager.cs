@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlaySystemManager : MonoBehaviour {
 
 	[SerializeField] AudioSectionPlayerBehavior audioPlayer;
-	[SerializeField] IndicatorSpawner indicatorSpawner;
+	[SerializeField] IndicatorSpawnerManager spawnerManager;
 	[SerializeField] TextViewBehavior textView;
 	[SerializeField] HitView hitView;
+	[SerializeField] new ParticleSystem particleSystem;
 
 	[System.NonSerialized] public BeatMapReader mapReader;
 	[System.NonSerialized] public BeatSpawner spawner;
@@ -30,9 +31,9 @@ public class PlaySystemManager : MonoBehaviour {
 		playLoopManager = new PlayLoopManager(mapReader, beatManager, activityMonitor, scoringChecker);
 		endMonitor = new SessionEndMonitor(audioPlayer, mapReader, spawner, textManager);
 
-		indicatorSpawner.Wire(spawner);
+		spawnerManager.Wire(spawner, textManager);
 		textView.Wire(textManager);
-		hitView.Wire(activityMonitor, scoringChecker);
+		hitView.Wire(activityMonitor, scoringChecker, particleSystem);
 
 		textManager.LoadText(text);
 	}

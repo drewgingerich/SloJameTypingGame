@@ -11,6 +11,7 @@ public class Beat {
 	public float timeToTarget { get; private set; }
 	float targetTime;
 	float travelTime;
+	public float progressRatio;
 
 	public int textIndex { get; private set; }
 	public char targetChar { get; private set; }
@@ -23,9 +24,9 @@ public class Beat {
 
 	public void UpdateProgress (float audioTime) {
 		timeToTarget = targetTime - audioTime;
-		OnUpdateTimeToTarget (this, timeToTarget);
-		float progressRatio = 1 - (timeToTarget / travelTime);
-		OnUpdateProgressRatio (this, progressRatio);
+		progressRatio = 1 - (timeToTarget / travelTime);
+		OnUpdateTimeToTarget(this, timeToTarget);
+		OnUpdateProgressRatio(this, progressRatio);
 	}
 
 	public void Destroy () {

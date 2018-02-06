@@ -8,13 +8,15 @@ public class IndicatorSpawner : MonoBehaviour {
 	[SerializeField] Transform indicatorSpawn;
 	[SerializeField] Transform indicatorTarget;
 
-	public void Wire (BeatSpawner spawner) {
-		spawner.OnSpawnBeat += SpawnIndicator;
+	void Start () {
+		indicatorSpawn.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0.1f);
+		indicatorTarget.gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.1f);
 	}
 
-	public void SpawnIndicator (Beat beat) {
+	public void SpawnIndicator (Beat beat, Color color) {
 		GameObject newIndicatorObject = Instantiate (indicatorPrefab);
 		newIndicatorObject.transform.parent = gameObject.transform;
+		newIndicatorObject.GetComponent<SpriteRenderer> ().color = color;
 		Indicator newIndicatorBehavior = newIndicatorObject.GetComponent<Indicator> ();
 		newIndicatorBehavior.Wire (beat, indicatorSpawn.position, indicatorTarget.position);
 	}
