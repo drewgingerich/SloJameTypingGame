@@ -4,15 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextViewBehavior : MonoBehaviour {
+public class TextView : MonoBehaviour {
 
 	[SerializeField] Text textComp;
 
 	string text;
+	int textIndex = 0;
 
-	public void Wire (TextManager textManager) {
-		textManager.OnStartText += (text) => this.text = text;
-		textManager.OnUpdateTextIndex += DisplayText;
+	public void Wire (string text, ScoringChecker scoringChecker, BeatActivityMonitor activityMonitor) {
+		this.text = text;
+		scoringChecker.OnScoreBeat += UpdateText;
+		activityMonitor.OnMissedBeat += UpdateText;
+		DisplayText (0);
+	}
+
+	void UpdateText () {
+		textIndex++;
+		if (textIndex >= text.Length)
+			return;
+		DisplayText (textIndex);
 	}
 
 	void DisplayText (int currentCharIndex) {

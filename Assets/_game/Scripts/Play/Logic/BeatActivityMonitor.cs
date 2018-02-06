@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class BeatActivityMonitor {
 
-	enum BeatState {Advancing, Active}
-
 	float activeTimeWindowHalfwidth;
 	List<Beat> monitoredBeats;
 
-	public event System.Action<Beat> OnMissedBeat = delegate {};
+	public event System.Action OnMissedBeat = delegate {};
 
 	public BeatActivityMonitor (BeatSpawner spawner) {
 		monitoredBeats = new List<Beat> ();
@@ -29,7 +27,7 @@ public class BeatActivityMonitor {
 		}
 		foreach (Beat beat in missedBeats) {
 			DeregisterBeat (beat);
-			OnMissedBeat (beat);
+			OnMissedBeat ();
 		}
 		return activeBeats;
 	}

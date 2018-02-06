@@ -10,7 +10,7 @@ public class ScoreKeeper {
 	public int beatsHit { get; private set; }
 
 	public ScoreKeeper (BeatActivityMonitor beatActivityMonitor, ScoringChecker scoringChecker) {
-		beatActivityMonitor.OnMissedBeat += (_) => ScoreMiss ();
+		beatActivityMonitor.OnMissedBeat += ScoreMiss;
 		scoringChecker.OnScoreBeat += ScoreSuccess;
 		totalNumberBeats = 0;
 		beatsHit = 0;

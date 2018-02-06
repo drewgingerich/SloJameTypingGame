@@ -4,27 +4,26 @@ using UnityEngine;
 
 public class ScoringChecker {
 
-	TextManager textManager;
-
 	public event System.Action OnScoreBeat = delegate {};
-
-	public ScoringChecker (TextManager textManager) {
-		this.textManager = textManager;
-	}
 
 	public void CheckForScores (List<Beat> activeBeats, List<char> inputChars) {
 		while (activeBeats.Count > 0) {
 			Beat beat = activeBeats[0];
-			if (beat.textIndex < textManager.textIndex)
+			if (beat.CheckForScore (ref inputChars)) {
+				activeBeats[0].Destroy();
+				activeBeats.RemoveAt(0);
+				OnScoreBeat();
 				return;
-			char desiredChar = textManager.GetCharacterAtIndex (beat.textIndex);
-			bool matchFound = FindMatch (desiredChar, inputChars);
-			if (!matchFound)
+			} else {
 				return;
-			textManager.UpdateTextIndex (beat.textIndex + 1);
-			activeBeats[0].Destroy ();
-			activeBeats.RemoveAt (0);
-			OnScoreBeat ();
+			}
+
+			// if (beat.textIndex < textManager.textIndex)
+			// 	return;
+			// char desiredChar = textManager.GetCharacterAtIndex (beat.textIndex);
+			// bool matchFound = FindMatch (desiredChar, inputChars);
+			// if (!matchFound)
+			// 	return;
 		}
 	}
 

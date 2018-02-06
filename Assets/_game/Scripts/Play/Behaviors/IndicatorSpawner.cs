@@ -13,10 +13,9 @@ public class IndicatorSpawner : MonoBehaviour {
 		indicatorTarget.gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.1f);
 	}
 
-	public void SpawnIndicator (Beat beat, Color color) {
+	public void SpawnIndicator (Beat beat) {
 		GameObject newIndicatorObject = Instantiate (indicatorPrefab);
 		newIndicatorObject.transform.parent = gameObject.transform;
-		newIndicatorObject.GetComponent<SpriteRenderer> ().color = color;
 		Indicator newIndicatorBehavior = newIndicatorObject.GetComponent<Indicator> ();
 		newIndicatorBehavior.Wire (beat, indicatorSpawn.position, indicatorTarget.position);
 	}

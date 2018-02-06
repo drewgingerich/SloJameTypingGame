@@ -14,17 +14,15 @@ public class IndicatorSpawnerManager : MonoBehaviour {
 	[SerializeField] IndicatorSpawner rightRingSpawner;
 	[SerializeField] IndicatorSpawner rightPinkySpawner;
 
-	TextManager textManager;
-	Color mainIndicatorColor;
-	Color supportIndicatorColor;
+	// Color mainIndicatorColor;
+	// color supportindicatorcolor;
 
-	void Awake () {
-		mainIndicatorColor = new Color(1, 1, 1, 1f);
-		supportIndicatorColor = new Color (0, 0, 1, 0f);
-	}
+	// void awake () {
+	// 	mainindicatorcolor = new color(1, 1, 1, 1f);
+	// 	supportindicatorcolor = new color (0, 0, 1, 0f);
+	// }
 
-	public void Wire (BeatSpawner spawner, TextManager textManager) {
-		this.textManager = textManager;
+	public void Wire (BeatSpawner spawner) {
 		spawner.OnSpawnBeat += DelegateSpawn;
 	}
 
@@ -34,51 +32,51 @@ public class IndicatorSpawnerManager : MonoBehaviour {
 	}
 
 	void SpawnAtMiddleSpawner (Beat beat) {
-		thumbSpawner.SpawnIndicator (beat, mainIndicatorColor);
+		thumbSpawner.SpawnIndicator (beat);
 	}
 
 	void SpawnByFinger (Beat beat) {
-		char targetChar = textManager.GetCharacterAtIndex (beat.textIndex);
+		char targetChar = beat.targetChar;
 		switch (targetChar) {
 			case '~':
 			case '!':
 			case 'Q':
 			case 'A':
 			case 'Z':
-				rightPinkySpawner.SpawnIndicator (beat, supportIndicatorColor);
+				// rightPinkySpawner.SpawnIndicator (beat);
 				goto case 'z';
 			case '`':
 			case '1':
 			case 'q':
 			case 'a':
 			case 'z':
-				leftPinkySpawner.SpawnIndicator (beat, mainIndicatorColor);
+				leftPinkySpawner.SpawnIndicator (beat);
 				break;
 			
 			case '@':
 			case 'W':
 			case 'S':
 			case 'X':
-				rightPinkySpawner.SpawnIndicator(beat, supportIndicatorColor);
+				// rightPinkySpawner.SpawnIndicator(beat);
 				goto case 'x';
 			case '2':
 			case 'w':
 			case 's':
 			case 'x':
-				leftRingSpawner.SpawnIndicator (beat, mainIndicatorColor);
+				leftRingSpawner.SpawnIndicator (beat);
 				break;
 
 			case '#':
 			case 'E':
 			case 'D':
 			case 'C':
-				rightPinkySpawner.SpawnIndicator(beat, supportIndicatorColor);
+				// rightPinkySpawner.SpawnIndicator(beat);
 				goto case 'c';
 			case '3':
 			case 'e':
 			case 'd':
 			case 'c':
-				leftMiddleSpawner.SpawnIndicator (beat, mainIndicatorColor);
+				leftMiddleSpawner.SpawnIndicator (beat);
 				break;
 
 			case '$':
@@ -89,7 +87,7 @@ public class IndicatorSpawnerManager : MonoBehaviour {
 			case 'T':
 			case 'G':
 			case 'B':
-				rightPinkySpawner.SpawnIndicator(beat, supportIndicatorColor);
+				// rightPinkySpawner.SpawnIndicator(beat);
 				goto case 'b';
 			case '4':
 			case 'r':
@@ -99,11 +97,11 @@ public class IndicatorSpawnerManager : MonoBehaviour {
 			case 't':
 			case 'g':
 			case 'b':
-				leftIndexSpawner.SpawnIndicator (beat, mainIndicatorColor);
+				leftIndexSpawner.SpawnIndicator (beat);
 				break;
 
 			case ' ':
-				thumbSpawner.SpawnIndicator (beat, mainIndicatorColor);
+				thumbSpawner.SpawnIndicator (beat);
 				break;
 
 			case '^':
@@ -114,7 +112,7 @@ public class IndicatorSpawnerManager : MonoBehaviour {
 			case 'U':
 			case 'J':
 			case 'M':
-				leftPinkySpawner.SpawnIndicator(beat, supportIndicatorColor);
+				// leftPinkySpawner.SpawnIndicator(beat);
 				goto case 'm';
 			case '6':
 			case 'y':
@@ -124,33 +122,33 @@ public class IndicatorSpawnerManager : MonoBehaviour {
 			case 'u':
 			case 'j':
 			case 'm':
-				rightIndexSpawner.SpawnIndicator (beat, mainIndicatorColor);
+				rightIndexSpawner.SpawnIndicator (beat);
 				break;
 
 			case '*':
 			case 'I':
 			case 'K':
 			case '<':
-				leftPinkySpawner.SpawnIndicator(beat, supportIndicatorColor);
+				// leftPinkySpawner.SpawnIndicator(beat);
 				goto case ',';
 			case '8':
 			case 'i':
 			case 'k':
 			case ',':
-				rightMiddleSpawner.SpawnIndicator(beat, mainIndicatorColor);
+				rightMiddleSpawner.SpawnIndicator(beat);
 				break;
 
 			case '(':
 			case 'O':
 			case 'L':
 			case '>':
-				leftPinkySpawner.SpawnIndicator(beat, supportIndicatorColor);
+				// leftPinkySpawner.SpawnIndicator(beat);
 				goto case '.';
 			case '9':
 			case 'o':
 			case 'l':
 			case '.':
-				rightRingSpawner.SpawnIndicator(beat, mainIndicatorColor);
+				rightRingSpawner.SpawnIndicator(beat);
 				break;
 
 			case ')':
@@ -163,7 +161,7 @@ public class IndicatorSpawnerManager : MonoBehaviour {
 			case '+':
 			case '}':
 			case '|':
-				leftPinkySpawner.SpawnIndicator(beat, supportIndicatorColor);
+				// leftPinkySpawner.SpawnIndicator(beat);
 				goto case '\n';
 			case '0':
 			case 'p':
@@ -176,7 +174,7 @@ public class IndicatorSpawnerManager : MonoBehaviour {
 			case ']':
 			case '\\':
 			case '\n':
-				rightPinkySpawner.SpawnIndicator(beat, mainIndicatorColor);
+				rightPinkySpawner.SpawnIndicator(beat);
 				break;
 
 			default:

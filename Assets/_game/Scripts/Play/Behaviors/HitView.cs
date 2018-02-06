@@ -9,7 +9,7 @@ public class HitView : MonoBehaviour {
 	[SerializeField] new ParticleSystem particleSystem;
 
 	public void Wire (BeatActivityMonitor activityMonitor, ScoringChecker scoringChecker, ParticleSystem particleSystem) {
-		activityMonitor.OnMissedBeat += (_) => DisplayMiss ();
+		activityMonitor.OnMissedBeat += DisplayMiss;
 		scoringChecker.OnScoreBeat += DisplayHit;
 		this.particleSystem = particleSystem;
 	}
