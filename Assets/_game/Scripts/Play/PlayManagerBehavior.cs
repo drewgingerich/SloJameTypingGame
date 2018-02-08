@@ -21,6 +21,12 @@ public class PlayManagerBehavior : MonoBehaviour {
 		StartCoroutine (LoadMusic ());
 	}
 
+	public void Wire (PlayLoopManager loopManager, ScoreKeeper scoreKeeper, SessionEndMonitor endMonitor) {
+		playLoopManager = loopManager;
+		this.scoreKeeper = scoreKeeper;
+		endMonitor.OnEndSession += EndPlay;
+	}
+
 	IEnumerator LoadMusic () {
 		SongData song = DataNavigator.currentSong;
 		WWW www = new WWW ("file://" + song.directoryPath + "/" + song.songTitle + ".wav");
@@ -38,6 +44,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 	}
 
 	void EndPlay () {
+		Debug.Log("EndPlay");
 		StartCoroutine (Cleanup ());
 	}
 

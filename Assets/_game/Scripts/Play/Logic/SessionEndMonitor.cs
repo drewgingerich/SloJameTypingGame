@@ -13,9 +13,9 @@ public class SessionEndMonitor {
 		BeatSpawner spawner, TextKeeper textKeeper) 
 	{
 		audioSectionPlayer.OnEndSection += OnEndSession;
-		textKeeper.OnFinishText += OnEndSession;
-		spawner.OnSpawnBeat += RegisterBeat;
+		textKeeper.OnFinishText += () => lastBeatSpawned = true;
 		mapReader.OnFinishMap += () => lastBeatSpawned = true;
+		spawner.OnSpawnBeat += RegisterBeat;
 	}
 
 	void RegisterBeat (Beat beat) {
@@ -30,6 +30,7 @@ public class SessionEndMonitor {
 	}
 
 	void CheckIfLastBeat (Beat _) {
+		Debug.Log("Hi");
 		if (lastBeatSpawned)
 			OnEndSession ();
 	}
