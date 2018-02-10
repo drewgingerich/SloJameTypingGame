@@ -14,21 +14,21 @@ public class PlayManagerBehavior : MonoBehaviour {
 	PlayLoopManager playLoopManager;
 	ScoreKeeper scoreKeeper;
 
-	public void Play () {
-		SongData song = DataNavigator.currentSong;
-		BeatMap map = new BeatMap(song, DataNavigator.beatmapIndex);
-		systemManager.LoadSystem (map, text);
-		StartCoroutine (LoadMusic ());
-	}
-
 	public void Wire (PlayLoopManager loopManager, ScoreKeeper scoreKeeper, SessionEndMonitor endMonitor) {
 		playLoopManager = loopManager;
 		this.scoreKeeper = scoreKeeper;
 		endMonitor.OnEndSession += EndPlay;
 	}
 
+	public void Play () {
+		SongData song = DataNavigator.GetCurrentSongData ();
+		BeatMap map = new BeatMap(song, DataNavigator.beatmapIndex);
+		systemManager.LoadSystem (map, text);
+		StartCoroutine (LoadMusic ());
+	}
+
 	IEnumerator LoadMusic () {
-		SongData song = DataNavigator.currentSong;
+		SongData song = DataNavigator.GetCurrentSongData ();
 		WWW www = new WWW ("file://" + song.directoryPath + "/" + song.songTitle + ".wav");
 		yield return www;
 
@@ -44,7 +44,6 @@ public class PlayManagerBehavior : MonoBehaviour {
 	}
 
 	void EndPlay () {
-		Debug.Log("EndPlay");
 		StartCoroutine (Cleanup ());
 	}
 

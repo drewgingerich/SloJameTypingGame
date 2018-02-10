@@ -30,7 +30,6 @@ public class SessionEndMonitor {
 	}
 
 	void CheckIfLastBeat (Beat _) {
-		Debug.Log("Hi");
 		if (lastBeatSpawned)
 			OnEndSession ();
 	}

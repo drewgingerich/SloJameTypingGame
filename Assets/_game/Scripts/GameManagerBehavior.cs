@@ -8,7 +8,7 @@ public class GameManagerBehavior : MonoBehaviour {
 	[SerializeField] GameObject menuSystem;
 	[SerializeField] GameObject playSystem;
 	[SerializeField] GameObject statsSystem;
-	[SerializeField] PlayManagerBehavior PlayManager;
+	[SerializeField] PlayManagerBehavior playManager;
 	[SerializeField] StatsSystemBehavior statsManager;
 
 	void Start () {
@@ -25,7 +25,7 @@ public class GameManagerBehavior : MonoBehaviour {
 		statsSystem.SetActive (false);
 		menuSystem.SetActive (false);
 		playSystem.SetActive (true);
-		PlayManager.Play ();
+		playManager.Play ();
 	}
 
 	public void LoadStats (int totalNumberBeats, int beatsHit, float scorePercentage) {

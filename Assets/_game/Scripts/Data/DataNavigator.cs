@@ -17,4 +17,10 @@ public static class DataNavigator  {
 		}
 		return songDataList;
 	}
+
+	public static SongData GetCurrentSongData () {
+		if (currentSong == null)
+			currentSong = GetSongDataList ()[0];
+		return currentSong;
+	}
 }
