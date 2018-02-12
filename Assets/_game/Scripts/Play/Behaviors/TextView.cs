@@ -9,19 +9,18 @@ public class TextView : MonoBehaviour {
 	[SerializeField] Text textComp;
 
 	string text;
-	int textIndex = 0;
+	int textIndex;
 
 	public void Wire (string text, ScoringChecker scoringChecker, BeatActivityMonitor activityMonitor) {
 		this.text = text;
 		scoringChecker.OnScoreBeat += UpdateText;
 		activityMonitor.OnMissedBeat += UpdateText;
+		textIndex = 0;
 		DisplayText (0);
 	}
 
 	void UpdateText () {
 		textIndex++;
-		if (textIndex >= text.Length)
-			return;
 		DisplayText (textIndex);
 	}
 
@@ -31,6 +30,9 @@ public class TextView : MonoBehaviour {
 	}
 
 	string FormatText(int currentCharIndex) {
+		if (currentCharIndex >= text.Length)
+			return "";
+
 		char currentChar = text [currentCharIndex];
 		if (currentChar == ' ')
 			currentChar = '_';
