@@ -10,11 +10,11 @@ public class SessionEndMonitor {
 	Beat mostRecentBeat;
 
 	public SessionEndMonitor (AudioSectionPlayerBehavior audioSectionPlayer, BeatMapReader mapReader, 
-		BeatSpawner spawner, TextKeeper textKeeper) 
+		BeatSpawner spawner, TextReader textKeeper) 
 	{
 		audioSectionPlayer.OnEndSection += OnEndSession;
 		textKeeper.OnFinishText += () => lastBeatSpawned = true;
-		mapReader.OnFinishMap += () => lastBeatSpawned = true;
+		mapReader.OnFinishBeatMap += () => lastBeatSpawned = true;
 		spawner.OnSpawnBeat += RegisterBeat;
 	}
 

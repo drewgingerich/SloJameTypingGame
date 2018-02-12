@@ -8,23 +8,23 @@ public class Beat {
 	public event System.Action<Beat, float> OnUpdateProgressRatio = delegate { };
 	public event System.Action<Beat> OnDestroy = delegate { };
 
-	public float timeToTarget;
-	float targetTime;
-	float travelTime;
+	public float countsToTarget;
+	float targetCounts;
+	float travelCounts;
 	public float progressRatio;
 
 	public char targetChar;
 
-	public Beat(float spawnTime, float targetTime, char targetChar) {
+	public Beat(float spawnCounts, float targetCounts, char targetChar) {
 		this.targetChar = targetChar;
-		this.targetTime = targetTime;
-		this.travelTime = targetTime - spawnTime;
+		this.targetCounts = targetCounts;
+		this.travelCounts = targetCounts - spawnCounts;
 	}
 
-	public void UpdateProgress(float audioTime) {
-		timeToTarget = targetTime - audioTime;
-		progressRatio = 1 - (timeToTarget / travelTime);
-		OnUpdateTimeToTarget(this, timeToTarget);
+	public void UpdateProgress(float currentCounts) {
+		countsToTarget = targetCounts - currentCounts;
+		progressRatio = 1 - (countsToTarget / travelCounts);
+		OnUpdateTimeToTarget(this, countsToTarget);
 		OnUpdateProgressRatio(this, progressRatio);
 	}
 

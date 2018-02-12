@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BeatActivityMonitor {
 
-	float activeTimeWindowHalfwidth;
+	float activeCountWindowHalfwidth = 0.5f;
 	List<Beat> monitoredBeats;
 
 	public event System.Action OnMissedBeat = delegate {};
@@ -13,16 +13,15 @@ public class BeatActivityMonitor {
 	public BeatActivityMonitor (BeatSpawner spawner) {
 		monitoredBeats = new List<Beat> ();
 		spawner.OnSpawnBeat += RegisterBeat;
-		activeTimeWindowHalfwidth = 0.2f;
 	}
 
 	public List<Beat> ReportActiveBeats () {
 		List<Beat> activeBeats = new List<Beat> ();
 		List<Beat> missedBeats = new List<Beat> ();
 		foreach (Beat beat in monitoredBeats) {
-			if (beat.timeToTarget <= activeTimeWindowHalfwidth * -1)
+			if (beat.countsToTarget <= activeCountWindowHalfwidth * -1)
 				missedBeats.Add (beat);
-			else if (beat.timeToTarget <= activeTimeWindowHalfwidth)
+			else if (beat.countsToTarget <= activeCountWindowHalfwidth)
 				activeBeats.Add (beat);
 		}
 		foreach (Beat beat in missedBeats) {

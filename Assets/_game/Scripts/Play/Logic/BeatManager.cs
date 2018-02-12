@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BeatTimeManager {
+public class BeatManager {
 
 	List<Beat> beats;
 
-	public BeatTimeManager (BeatSpawner spawner) {
+	public BeatManager (BeatSpawner spawner) {
 		beats = new List<Beat> ();
 		spawner.OnSpawnBeat += RegisterBeat;
 	}
@@ -20,9 +20,9 @@ public class BeatTimeManager {
 		beats.Remove (beat);
 	}
 
-	public void UpdateBeatTimes (float audioTime) {
+	public void UpdateBeats (float beatCounts) {
 		foreach (Beat beat in beats) {
-			beat.UpdateProgress (audioTime);
+			beat.UpdateProgress (beatCounts);
 		}
 	}
 }

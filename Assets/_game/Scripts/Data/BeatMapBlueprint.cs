@@ -16,17 +16,17 @@ public class BeatmapBlueprint {
 		measures.Add (new bool [measureDivisor]);
 	}
 
-	public List<float> Translate (SongData songData) {
-		List<float> beatTimings = new List<float> ();
-		float beatDistance = 60 / (48 * songData.bpm);
-		float songTime = 0;
-		foreach (bool[] measure in measures) {
-			foreach (bool beat in measure) {
-				if (beat)
-					beatTimings.Add (songTime);
-				songTime += beatDistance;
+	public List<float> GetTargetCounts () {
+		List<float> targetCounts = new List<float>();
+		float intervalBeatValue = 4 / (float)BeatmapBlueprint.measureDivisor;
+		for (int i = 0; i < measures.Count; i++) {
+			for (int j = 0; j < BeatmapBlueprint.measureDivisor; j++) {
+				if (measures[i][j]) {
+					float targetCount = ((float)i * 4) + ((float)j * intervalBeatValue);
+					targetCounts.Add(targetCount);
+				}
 			}
 		}
-		return beatTimings;
+		return targetCounts;
 	}
 }

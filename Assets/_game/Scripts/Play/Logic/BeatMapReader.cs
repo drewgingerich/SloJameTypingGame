@@ -4,34 +4,38 @@ using UnityEngine;
 
 public class BeatMapReader {
 
-	BeatMap beatMap;
-	TextKeeper textKeeper;
-	float beatTime;
-	float readAheadTime = 3f;
-	bool mapFinished = false;
+	public event System.Action<float> OnReadBeat = delegate {};
+	public event System.Action OnFinishBeatMap = delegate {};
 
-	public event System.Action<float, float, char> OnReadBeat = delegate {};
-	public event System.Action OnFinishMap = delegate {};
+	List<float> beatMap;
+	int mapIndex;
 
-	public BeatMapReader (BeatMap beatMap, TextKeeper textKeeper) {
+	public BeatMapReader (List<float> beatMap) {
 		this.beatMap = beatMap;
-		beatMap.OnFinishBeats += FinishSpawning;
-		this.textKeeper = textKeeper;
-		textKeeper.OnFinishText += FinishSpawning;
-		beatTime = beatMap.GetNextBeatTime();
 	}
 
-	public void ReadMapUpToTime (float audioTime) {
-		if (mapFinished)
-			return;
-		float seekTime = audioTime + readAheadTime;
-		while (seekTime >= beatTime && !mapFinished) {
-			OnReadBeat (beatTime - readAheadTime, beatTime, textKeeper.GetNextChar ());
-			beatTime = beatMap.GetNextBeatTime ();
-		}
-	}
+	// public List<float> ReadMapToBeatCount (float count) {
+	// 	List<float> beatsToSpawn = new List<float> ();
+	// 	if (mapIndex >= beatMap.Count)
+	// 		return beatsToSpawn;
+	// 	while (count >= beatMap[mapIndex]) {
+	// 		beatsToSpawn.Add (beatMap[mapIndex]);
+	// 		mapIndex++;
+	// 		if (mapIndex >= beatMap.Count)
+	// 			OnFinishBeatMap ();
+	// 	}
+	// 	return beatsToSpawn;
+	// }
 
-	void FinishSpawning () {
-		mapFinished = true;
+	public bool SearchForNextBeat (float count) {
+		if (mapIndex >= beatMap.Count)
+			return false;
+		if (count < beatMap[mapIndex])
+			return false;
+		OnReadBeat (beatMap[mapIndex]);
+		mapIndex++;
+		if (mapIndex >= beatMap.Count)
+			OnFinishBeatMap ();
+		return true;
 	}
 }

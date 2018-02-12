@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class PlayLoopManager {
 
-	BeatMapReader beatMapReader;
-	BeatTimeManager beatTimeManager;
-	BeatActivityMonitor beatActivityMonitor;
+	BeatCountTracker countTracker;
+	BeatSpawner spawner;
+	BeatManager beatManager;
+	BeatActivityMonitor activityMonitor;
 	ScoringChecker scoringChecker;
 
-	public PlayLoopManager (BeatMapReader beatMapReader, BeatTimeManager beatTimeManager, 
-		BeatActivityMonitor beatActivityMonitor, ScoringChecker scoringChecker) 
+	public PlayLoopManager (BeatCountTracker countTracker, BeatSpawner spawner, BeatManager beatManager, 
+		BeatActivityMonitor activityMonitor, ScoringChecker scoringChecker) 
 	{
-		this.beatMapReader = beatMapReader;
-		this.beatTimeManager = beatTimeManager;
-		this.beatActivityMonitor = beatActivityMonitor;
+		this.countTracker = countTracker;
+		this.spawner = spawner;
+		this.beatManager = beatManager;
+		this.activityMonitor = activityMonitor;
 		this.scoringChecker = scoringChecker;
 	}
 
 	public void PlayLoop (float audioTime, List<char> inputChars) {
-		beatMapReader.ReadMapUpToTime (audioTime);
-		beatTimeManager.UpdateBeatTimes (audioTime);
-		List<Beat> activeBeats = beatActivityMonitor.ReportActiveBeats ();
+		float counts = countTracker.GetBeatCountsAtTime (audioTime);
+		spawner.CheckForBeatSpawns (counts);
+		beatManager.UpdateBeats (counts);
+		List<Beat> activeBeats = activityMonitor.ReportActiveBeats ();
 		scoringChecker.CheckForScores(activeBeats, inputChars);
 	}
 }

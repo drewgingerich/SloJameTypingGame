@@ -22,8 +22,9 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 	public void Play () {
 		SongData song = DataNavigator.GetCurrentSongData ();
-		BeatMap map = new BeatMap(song, DataNavigator.beatmapIndex);
-		systemManager.LoadSystem (map, text);
+		BeatmapBlueprint blueprint = song.blueprints[DataNavigator.beatmapIndex];
+		List<float> beatMap = blueprint.GetTargetCounts ();
+		systemManager.LoadSystem (song, beatMap, text);
 		StartCoroutine (LoadMusic ());
 	}
 
@@ -40,7 +41,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 	void PlayLoop (float audioTime) {
 		List<char> inputString = new List<char> (Input.inputString);
-		systemManager.playLoopManager.PlayLoop (audioTime, inputString);
+		playLoopManager.PlayLoop (audioTime, inputString);
 	}
 
 	void EndPlay () {
@@ -49,7 +50,7 @@ public class PlayManagerBehavior : MonoBehaviour {
 
 	IEnumerator Cleanup () {
 		yield return new WaitForSecondsRealtime (1);
-		float scorePercentage = systemManager.scoreKeeper.GetScorePercentage ();
+		float scorePercentage = scoreKeeper.GetScorePercentage ();
 		audioPlayer.Stop ();
 		OnEndPlay (scorePercentage);
 		gameManager.LoadStats (scoreKeeper.totalNumberBeats, scoreKeeper.beatsHit, scoreKeeper.GetScorePercentage ());
