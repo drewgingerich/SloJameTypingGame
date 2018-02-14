@@ -12,7 +12,7 @@ public class SongData {
 	public string audioFilePath;
 
 	public string songTitle;
-	public float bpm;
+	public float bpm = 60f;
 	public float beatTimingOffset;
 	public float duration;
 	public List<BeatmapBlueprint> blueprints;
