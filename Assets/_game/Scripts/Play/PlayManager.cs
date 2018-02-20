@@ -20,6 +20,10 @@ public class PlayManager : MonoBehaviour {
 		endMonitor.OnEndSession += EndPlay;
 	}
 
+	void Awake () {
+		gameObject.SetActive (false);
+	}
+
 	void OnEnable() {
 		SongData song = DataNavigator.GetCurrentSongData();
 		BeatmapBlueprint blueprint = DataNavigator.GetCurrentBlueprint();
