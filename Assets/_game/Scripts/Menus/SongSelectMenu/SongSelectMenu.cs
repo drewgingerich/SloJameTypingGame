@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class SongSelectMenu : SnapMenu {
 
+	public UnityEvent OnSelectSong;
 	[SerializeField] GameObject beatmapMenu;
 	[SerializeField] GameObject verticalDisplay;
 	[SerializeField] GameObject songSelectButtonPrefab;
@@ -39,18 +40,8 @@ public class SongSelectMenu : SnapMenu {
 			Destroy(buttons[i - 1]);
 	}
 
-	void Unload() {
-		gameObject.SetActive(false);
-	}
-
-	public void LoadNext(GameObject next) {
-		Unload();
-		next.SetActive(true);
-	}
-
 	void SelectSong(SongData chosenSong) {
 		DataNavigator.currentSong = chosenSong;
-		Unload();
-		LoadNext(beatmapMenu);
+		OnSelectSong.Invoke();
 	}
 }

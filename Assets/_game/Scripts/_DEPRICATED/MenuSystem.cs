@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuSystem : MonoBehaviour {
+public static class MenuSystem {
 
-	[SerializeField] GameManager gameManager;
+	public static void LoadNext (GameObject current, GameObject next) {
+		current.SetActive (false);
+		next.SetActive (true);
+	}
 }
 // 	[SerializeField] MainMenuBehavior mainMenu;
 // 	[SerializeField] SongSelectMenu playSelectMenu;

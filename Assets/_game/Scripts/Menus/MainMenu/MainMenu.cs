@@ -10,13 +10,4 @@ public class MainMenu : SnapMenu {
 	void OnEnable() {
 		firstSelectedButton.GetComponent<Button>().Select();
 	}
-
-	void Unload() {
-		gameObject.SetActive(false);
-	}
-
-	public void LoadNext(GameObject next) {
-		next.SetActive(true);
-		Unload();
-	}
 }

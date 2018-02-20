@@ -6,8 +6,16 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
 	[SerializeField] GameObject startingSceneObject;
+	GameObject current;
+
+	public void LoadNext(GameObject next) {
+		if (current != null)
+			current.SetActive(false);
+		current = next;
+		next.SetActive(true);
+	}
 
 	void Start() {
-		startingSceneObject.SetActive(true);
+		LoadNext (startingSceneObject);
 	}
 }
