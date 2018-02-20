@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StatsSystemBehavior : MonoBehaviour {
 
-	[SerializeField] GameManagerBehavior gameManager;
+	[SerializeField] GameManager gameManager;
 	[SerializeField] ScoreRatioViewBehavior scoreRatioView;
 	[SerializeField] ScorePercentageViewBehavior scorePercentageView;
 
@@ -14,6 +14,6 @@ public class StatsSystemBehavior : MonoBehaviour {
 	}
 
 	public void MoveToMenus () {
-		gameManager.LoadMenu ();
+		// gameManager.LoadMenu ();
 	}
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlaySystemManager : MonoBehaviour {
 
 	[SerializeField] AudioSectionPlayerBehavior audioPlayer;
-	[SerializeField] PlayManagerBehavior playManager;
+	[SerializeField] PlayManager playManager;
 	[SerializeField] IndicatorSpawnerManager spawnerManager;
 	[SerializeField] TextView textView;
 	[SerializeField] HitView hitView;
