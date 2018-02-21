@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayManager : MonoBehaviour {
 
-	public event System.Action<float> OnEndPlay = delegate { };
+	public UnityEvent OnEndPlay;
 
 	[SerializeField] [TextArea] string text;
 	[SerializeField] GameManager gameManager;
@@ -24,6 +25,10 @@ public class PlayManager : MonoBehaviour {
 		gameObject.SetActive (false);
 	}
 
+	void Start() {
+		audioPlayer.OnUpdatePosition += PlayLoop;
+	}
+
 	void OnEnable() {
 		SongData song = DataNavigator.GetCurrentSongData();
 		BeatmapBlueprint blueprint = DataNavigator.GetCurrentBlueprint();
@@ -38,12 +43,15 @@ public class PlayManager : MonoBehaviour {
 		yield return www;
 
 		AudioClip clip = www.GetAudioClip();
-		audioPlayer.OnUpdatePosition += PlayLoop;
 		audioPlayer.LoadClip(clip);
 		audioPlayer.PlaySection(0, clip.length);
 	}
 
 	void PlayLoop(float audioTime) {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			EndPlay();
+			return;
+		}
 		List<char> inputString = new List<char>(Input.inputString);
 		playLoopManager.PlayLoop(audioTime, inputString);
 	}
@@ -56,7 +64,6 @@ public class PlayManager : MonoBehaviour {
 		yield return new WaitForSecondsRealtime(1);
 		float scorePercentage = scoreKeeper.GetScorePercentage();
 		audioPlayer.Stop();
-		OnEndPlay(scorePercentage);
-		// gameManager.LoadStats(scoreKeeper.totalNumberBeats, scoreKeeper.beatsHit, scoreKeeper.GetScorePercentage());
+		OnEndPlay.Invoke();
 	}
 }
