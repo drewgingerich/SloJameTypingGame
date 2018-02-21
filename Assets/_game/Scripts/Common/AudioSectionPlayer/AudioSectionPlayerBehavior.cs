@@ -38,6 +38,12 @@ public class AudioSectionPlayerBehavior : MonoBehaviour {
 		controller.PlayAudioSection (startTime, endTime);
 	}
 
+	public void Play() {
+		if (audioSource.clip == null)
+			return;
+		controller.PlayAudioSection (0f, audioSource.clip.length);
+	}
+
 	public void Stop () {
 		controller.paused = true;
 		audioSource.Stop ();
