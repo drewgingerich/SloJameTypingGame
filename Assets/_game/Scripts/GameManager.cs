@@ -5,17 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-	[SerializeField] GameObject startingSceneObject;
-	GameObject current;
+	[SerializeField] GameObject startingDomainObject;
+	GameObject currentDomainObject;
 
 	public void LoadNext(GameObject next) {
-		if (current != null)
-			current.SetActive(false);
-		current = next;
+		if (currentDomainObject != null)
+			currentDomainObject.SetActive(false);
+		currentDomainObject = next;
 		next.SetActive(true);
 	}
 
 	void Start() {
-		LoadNext (startingSceneObject);
+		LoadNext (startingDomainObject);
 	}
 }
