@@ -9,7 +9,7 @@ public class PlayManager : MonoBehaviour {
 
 	[SerializeField] [TextArea] string text;
 	[SerializeField] GameManager gameManager;
-	[SerializeField] AudioSectionPlayerBehavior audioPlayer;
+	[SerializeField] SmartAudioSource audioPlayer;
 	[SerializeField] PlaySystemManager systemManager;
 
 	PlayLoopManager playLoopManager;
@@ -26,7 +26,7 @@ public class PlayManager : MonoBehaviour {
 	}
 
 	void Start() {
-		audioPlayer.OnUpdatePosition += PlayLoop;
+		audioPlayer.OnChangeAudioTime += PlayLoop;
 	}
 
 	void OnEnable() {
@@ -42,9 +42,8 @@ public class PlayManager : MonoBehaviour {
 		WWW www = new WWW("file://" + song.directoryPath + "/" + song.songTitle + ".wav");
 		yield return www;
 
-		AudioClip clip = www.GetAudioClip();
-		audioPlayer.LoadClip(clip);
-		audioPlayer.PlaySection(0, clip.length);
+		audioPlayer.clip = www.GetAudioClip();
+		audioPlayer.Play();
 	}
 
 	void PlayLoop(float audioTime) {

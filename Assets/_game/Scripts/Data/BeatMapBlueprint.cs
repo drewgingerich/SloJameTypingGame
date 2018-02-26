@@ -6,6 +6,8 @@ public class BeatmapBlueprint {
 
 	public const int measureDivisor = 192;
 
+	public event System.Action<int> OnChangeMeasureCount = delegate {};
+
 	public List<bool[]> measures;
 
 	public BeatmapBlueprint () {
@@ -14,6 +16,7 @@ public class BeatmapBlueprint {
 
 	public void AddMeasure () {
 		measures.Add (new bool [measureDivisor]);
+		OnChangeMeasureCount(measures.Count);
 	}
 
 	public List<float> GetTargetCounts () {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ImportMenu : SnapMenu {
+public class ImportMenu : MonoBehaviour {
 
 	[SerializeField] Button backButton;
 

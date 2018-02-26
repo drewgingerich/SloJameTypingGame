@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class BeatmapSelectMenu : SnapMenu {
+public class BeatmapSelectMenu : MonoBehaviour {
 
 	public UnityEvent OnSelectBeatmap;
 

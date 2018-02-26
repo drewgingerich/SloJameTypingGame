@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FindTempos : SnapMenu {
+public class FindTempos : MonoBehaviour {
 
 	[SerializeField] Text tempoText;
 	[SerializeField] Text explanationText;
-	[SerializeField] AudioSectionPlayerBehavior audioPlayer;
+	[SerializeField] SmartAudioSource audioSource;
 	[SerializeField] Selectable firstSelected;
 
 	bool audioReady;
 	bool findingTempo;
 	List<float> tapTimes;
-	float searchStartTime;
 	float bpm;
 
 	public void SaveChanges() {
@@ -34,7 +33,7 @@ public class FindTempos : SnapMenu {
 	IEnumerator LoadClip(string path) {
 		WWW www = new WWW("file://" + path);
 		yield return www;
-		audioPlayer.LoadClip(www.GetAudioClip());
+		audioSource.clip = www.GetAudioClip();
 		audioReady = true;
 		explanationText.text = "Press [SPACE] to start.";
 	}
@@ -66,15 +65,14 @@ public class FindTempos : SnapMenu {
 		tempoText.text = string.Format("Tempo = {0:0.0} bpm", bpm);
 	}
 	void StartTempoFinding() {
-		audioPlayer.Play();
+		audioSource.Play();
 		findingTempo = true;
-		searchStartTime = Time.time;
 		tapTimes = new List<float>();
 		explanationText.text = "When you're ready, tap [SPACE] along with the rhythm. Press [ESC] to finish.";
 	}
 
 	void EndTempoFinding() {
-		audioPlayer.Stop();
+		audioSource.Stop();
 		findingTempo = false;
 		explanationText.text = "Press [SPACE] to start the music.";
 	}

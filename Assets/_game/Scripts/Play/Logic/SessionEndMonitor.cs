@@ -9,10 +9,10 @@ public class SessionEndMonitor {
 	bool lastBeatSpawned = false;
 	Beat mostRecentBeat;
 
-	public SessionEndMonitor (AudioSectionPlayerBehavior audioSectionPlayer, BeatMapReader mapReader, 
+	public SessionEndMonitor (SmartAudioSource audioSource, BeatMapReader mapReader, 
 		BeatSpawner spawner, TextReader textKeeper) 
 	{
-		audioSectionPlayer.OnEndSection += OnEndSession;
+		audioSource.OnEnd += OnEndSession;
 		textKeeper.OnFinishText += () => lastBeatSpawned = true;
 		mapReader.OnFinishBeatMap += () => lastBeatSpawned = true;
 		spawner.OnSpawnBeat += RegisterBeat;

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class SongSelectMenu : SnapMenu {
+public class SongSelectMenu : MonoBehaviour {
 
 	public UnityEvent OnSelectSong;
 	[SerializeField] GameObject beatmapMenu;
