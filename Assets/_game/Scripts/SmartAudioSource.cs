@@ -5,12 +5,13 @@ using UnityEngine.Events;
 
 public class SmartAudioSource : MonoBehaviour {
 
-	public event System.Action<float> OnChangeAudioTime = delegate {};
-	public event System.Action OnStart = delegate {};
-	public event System.Action OnEnd = delegate {};
+	public event System.Action OnLoadClip = delegate { };
+	public event System.Action<float> OnChangeAudioTime = delegate { };
+	public event System.Action OnPlay = delegate { };
+	public event System.Action OnStop = delegate { };
 
-	public AudioClip clip { 
-		get { return audioSource.clip; } 
+	public AudioClip clip {
+		get { return audioSource.clip; }
 		set { audioSource.clip = value; }
 	}
 
@@ -19,7 +20,15 @@ public class SmartAudioSource : MonoBehaviour {
 	float endTime;
 	float lastAudioTime;
 	float smoothedAudioTime;
-	
+
+	public IEnumerator LoadClipAtPath(string path) {
+		SongData song = DataNavigator.GetCurrentSongData();
+		WWW www = new WWW("file://" + song.directoryPath + "/" + song.songTitle + ".wav");
+		yield return www;
+		audioSource.clip = www.GetAudioClip();
+		OnLoadClip();
+	}
+
 	public void Play() {
 		Play(0, clip.length);
 	}
@@ -40,19 +49,20 @@ public class SmartAudioSource : MonoBehaviour {
 			smoothedAudioTime = startTime;
 		}
 		this.endTime = endTime;
-		OnStart();
+		OnPlay();
 	}
 
 	public void Stop() {
-		gameObject.SetActive(false);
 		if (audioSource.isPlaying)
 			audioSource.Stop();
+		OnStop();
+		gameObject.SetActive(false);
 	}
 
 	public void Pause() {
-		gameObject.SetActive(false);
 		if (audioSource.isPlaying)
 			audioSource.Pause();
+		gameObject.SetActive(false);
 	}
 
 	public void Unpause() {
@@ -69,7 +79,7 @@ public class SmartAudioSource : MonoBehaviour {
 
 		if (smoothedAudioTime >= endTime) {
 			Stop();
-			OnEnd();
+			OnStop();
 			return;
 		}
 

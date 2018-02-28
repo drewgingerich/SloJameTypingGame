@@ -12,7 +12,7 @@ public class SessionEndMonitor {
 	public SessionEndMonitor (SmartAudioSource audioSource, BeatMapReader mapReader, 
 		BeatSpawner spawner, TextReader textKeeper) 
 	{
-		audioSource.OnEnd += OnEndSession;
+		audioSource.OnStop += OnEndSession;
 		textKeeper.OnFinishText += () => lastBeatSpawned = true;
 		mapReader.OnFinishBeatMap += () => lastBeatSpawned = true;
 		spawner.OnSpawnBeat += RegisterBeat;

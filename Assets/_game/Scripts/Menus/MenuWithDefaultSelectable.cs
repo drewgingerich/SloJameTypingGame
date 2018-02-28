@@ -8,6 +8,11 @@ public class MenuWithDefaultSelectable : MonoBehaviour {
 	public Selectable defaultSelectable;
 
 	void OnEnable() {
+		StartCoroutine(SelectDefaultRoutine());
+	}
+	
+	IEnumerator SelectDefaultRoutine() {
+		yield return new WaitForEndOfFrame();
 		defaultSelectable.Select();
 	}
 }

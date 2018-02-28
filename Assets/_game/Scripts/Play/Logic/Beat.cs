@@ -15,10 +15,10 @@ public class Beat {
 
 	public char targetChar;
 
-	public Beat(float spawnCounts, float targetCounts, char targetChar) {
+	public Beat(float countAtSpawn, float targetCount, char targetChar) {
 		this.targetChar = targetChar;
-		this.targetCounts = targetCounts;
-		this.travelCounts = targetCounts - spawnCounts;
+		this.targetCounts = targetCount;
+		this.travelCounts = targetCount - countAtSpawn;
 	}
 
 	public void UpdateProgress(float currentCounts) {

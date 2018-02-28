@@ -21,23 +21,18 @@ public class BeatmakerAudioControls : MonoBehaviour {
 	float startTime;
 	float endTime;
 
-	void Awake() {
-		audioSource.OnChangeAudioTime += TrackSectionProgress;
-		audioSource.OnEnd += Stop;
-	}
-
 	void OnEnable() {
 		OnStartLoading.Invoke();
 		SongData songData = DataNavigator.GetCurrentSongData();
 		measureDuration = 4 * 60 / songData.bpm;
-		StartCoroutine(LoadClip(songData.directoryPath + "/" + songData.songTitle + ".wav"));
+		audioSource.OnChangeAudioTime += TrackSectionProgress;
+		audioSource.OnStop += Cleanup;
+		StartCoroutine(audioSource.LoadClipAtPath(songData.directoryPath + "/" + songData.songTitle + ".wav"));
 	}
 
-	IEnumerator LoadClip(string path) {
-		WWW www = new WWW("file://" + path);
-		yield return www;
-		audioSource.clip = www.GetAudioClip();
-		OnReady.Invoke();
+	void OnDisable() {
+		audioSource.OnChangeAudioTime -= TrackSectionProgress;
+		audioSource.OnStop -= Cleanup;
 	}
 
 	public void FindSectionBounds(int measureIndex) {
@@ -53,8 +48,12 @@ public class BeatmakerAudioControls : MonoBehaviour {
 
 	public void Stop() {
 		audioSource.Stop();
+		Cleanup();
+	}
+
+	void Cleanup() {
 		OnReady.Invoke();
-		OnUpdateSectionProgress.Invoke(0f);	
+		OnUpdateSectionProgress.Invoke(0f);
 	}
 
 	void TrackSectionProgress(float audioTime) {

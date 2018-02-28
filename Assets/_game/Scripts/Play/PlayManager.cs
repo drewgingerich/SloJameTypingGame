@@ -34,16 +34,15 @@ public class PlayManager : MonoBehaviour {
 		BeatmapBlueprint blueprint = DataNavigator.GetCurrentBlueprint();
 		List<float> beatMap = blueprint.GetTargetCounts();
 		systemManager.LoadSystem(song, beatMap, text);
-		StartCoroutine(LoadMusic());
+		audioPlayer.OnLoadClip += StartPlay;
+		StartCoroutine(audioPlayer.LoadClipAtPath("file://" + song.directoryPath + "/" + song.songTitle + ".wav"));
 	}
 
-	IEnumerator LoadMusic() {
-		SongData song = DataNavigator.GetCurrentSongData();
-		WWW www = new WWW("file://" + song.directoryPath + "/" + song.songTitle + ".wav");
-		yield return www;
-
-		audioPlayer.clip = www.GetAudioClip();
-		audioPlayer.Play();
+	void OnDisable() {
+		audioPlayer.OnLoadClip -= StartPlay;
+	}
+	void StartPlay() {
+		audioPlayer.Play(-5f);
 	}
 
 	void PlayLoop(float audioTime) {
@@ -56,10 +55,10 @@ public class PlayManager : MonoBehaviour {
 	}
 
 	void EndPlay() {
-		StartCoroutine(Cleanup());
+		StartCoroutine(EndPlayRoutine());
 	}
 
-	IEnumerator Cleanup() {
+	IEnumerator EndPlayRoutine() {
 		yield return new WaitForSecondsRealtime(1);
 		float scorePercentage = scoreKeeper.GetScorePercentage();
 		audioPlayer.Stop();

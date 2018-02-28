@@ -21,6 +21,8 @@ public class MeasureBeatActivityUI : MonoBehaviour {
 	}
 
 	public void UpdateBeatActivity(int index, bool activity) {
+		if (activityMarkers == null)
+			return;
 		if (activity && activityMarkers[index] == null)
 			CreateActivityMarker(index);
 		else if (!activity && activityMarkers[index] != null)
